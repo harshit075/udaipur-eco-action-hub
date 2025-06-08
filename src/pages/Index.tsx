@@ -1,10 +1,12 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import Statistics from '@/components/Statistics';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { TreePine, Bike, Users, MapPin, Calendar, Award } from 'lucide-react';
+import { TreePine, Bike, Users, MapPin, Calendar, Award, BarChart3 } from 'lucide-react';
 
 const Index = () => {
   const features = [
@@ -39,8 +41,33 @@ const Index = () => {
       <Navbar />
       <Hero />
       
-      {/* Features Section */}
+      {/* Public Transparency Section */}
       <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              <span className="text-gradient">Transparent</span> Community Impact
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Track our collective environmental progress in real-time. Every contribution counts towards a greener Udaipur.
+            </p>
+          </div>
+          
+          <Statistics />
+          
+          <div className="text-center mt-12">
+            <Link to="/dashboard">
+              <Button className="gradient-nature text-white px-8 py-3 text-lg hover:opacity-90 transition-opacity">
+                <BarChart3 className="w-5 h-5 mr-2" />
+                View Full Public Dashboard
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-gradient-to-br from-green-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -70,7 +97,7 @@ const Index = () => {
       </section>
 
       {/* Quick Actions */}
-      <section className="py-20 bg-gradient-to-br from-green-50 to-blue-50">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -87,45 +114,14 @@ const Index = () => {
                 <CardContent className="p-8 text-center">
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">{action.title}</h3>
                   <p className="text-gray-600 mb-6">{action.description}</p>
-                  <Button className="w-full gradient-nature text-white hover:opacity-90 transition-opacity">
-                    Get Started
-                  </Button>
+                  <Link to={action.href}>
+                    <Button className="w-full gradient-nature text-white hover:opacity-90 transition-opacity">
+                      Get Started
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Community Impact */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Community <span className="text-gradient">Impact</span>
-            </h2>
-            <p className="text-xl text-gray-600">
-              Together, we're creating lasting environmental change in Udaipur
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">2,847</div>
-              <div className="text-gray-600">Trees Planted</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">15,623</div>
-              <div className="text-gray-600">KM Cycled</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-emerald-600 mb-2">12</div>
-              <div className="text-gray-600">Lakes Cleaned</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-orange-600 mb-2">1,250</div>
-              <div className="text-gray-600">Volunteers</div>
-            </div>
           </div>
         </div>
       </section>
@@ -144,9 +140,9 @@ const Index = () => {
               Building a sustainable future for Udaipur, one action at a time.
             </p>
             <div className="flex justify-center space-x-6">
-              <a href="/events" className="text-gray-400 hover:text-white transition-colors">Events</a>
-              <a href="/donate" className="text-gray-400 hover:text-white transition-colors">Donate</a>
-              <a href="/dashboard" className="text-gray-400 hover:text-white transition-colors">Dashboard</a>
+              <Link to="/events" className="text-gray-400 hover:text-white transition-colors">Events</Link>
+              <Link to="/donate" className="text-gray-400 hover:text-white transition-colors">Donate</Link>
+              <Link to="/dashboard" className="text-gray-400 hover:text-white transition-colors">Dashboard</Link>
             </div>
           </div>
         </div>
