@@ -10,23 +10,26 @@ interface StatisticCardProps {
   color: string;
   description?: string;
   trend?: string;
+  delay?: number;
 }
 
-const StatisticCard = ({ title, value, icon: Icon, color, description, trend }: StatisticCardProps) => (
-  <Card className="hover:shadow-lg transition-shadow">
-    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+const StatisticCard = ({ title, value, icon: Icon, color, description, trend, delay = 0 }: StatisticCardProps) => (
+  <Card className="card-hover bg-gradient-to-br from-white to-gray-50/50 border-0 shadow-lg fade-in" style={{ animationDelay: `${delay}ms` }}>
+    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
       <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
-      <Icon className={`h-4 w-4 ${color}`} />
+      <div className={`p-3 rounded-full bg-gradient-to-br ${color} shadow-md`}>
+        <Icon className="h-5 w-5 text-white" />
+      </div>
     </CardHeader>
-    <CardContent>
-      <div className="text-2xl font-bold text-foreground">{value}</div>
+    <CardContent className="space-y-3">
+      <div className="text-3xl font-bold text-foreground tracking-tight">{value}</div>
       {description && (
-        <p className="text-xs text-muted-foreground mt-1">{description}</p>
+        <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
       )}
       {trend && (
-        <div className="flex items-center text-xs text-green-600 mt-2">
+        <div className="flex items-center text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full w-fit">
           <TrendingUp className="w-3 h-3 mr-1" />
-          {trend}
+          <span className="font-medium">{trend}</span>
         </div>
       )}
     </CardContent>
@@ -39,54 +42,60 @@ const Statistics = () => {
       title: 'Trees Planted',
       value: '2,847',
       icon: TreePine,
-      color: 'text-green-600',
+      color: 'from-green-500 to-emerald-600',
       description: 'Across 12 wards in Udaipur',
-      trend: '+12% this month'
+      trend: '+12% this month',
+      delay: 0
     },
     {
       title: 'Kilometers Cycled',
       value: '15,623',
       icon: Bike,
-      color: 'text-blue-600',
+      color: 'from-blue-500 to-cyan-600',
       description: 'By 450+ participants',
-      trend: '+8% this week'
+      trend: '+8% this week',
+      delay: 100
     },
     {
       title: 'Lakes Cleaned',
       value: '12',
       icon: Users,
-      color: 'text-emerald-600',
+      color: 'from-emerald-500 to-teal-600',
       description: 'Including Fatehsagar & Pichola',
-      trend: '+2 new locations'
+      trend: '+2 new locations',
+      delay: 200
     },
     {
       title: 'E-Waste Collected',
       value: '845kg',
       icon: Recycle,
-      color: 'text-orange-600',
+      color: 'from-orange-500 to-amber-600',
       description: 'From 280+ households',
-      trend: '+15% this month'
+      trend: '+15% this month',
+      delay: 300
     },
     {
       title: 'Active Volunteers',
       value: '1,250',
       icon: Award,
-      color: 'text-purple-600',
+      color: 'from-purple-500 to-violet-600',
       description: 'Regular participants',
-      trend: '+45 new members'
+      trend: '+45 new members',
+      delay: 400
     },
     {
       title: 'Events Completed',
       value: '89',
       icon: TrendingUp,
-      color: 'text-indigo-600',
+      color: 'from-indigo-500 to-blue-600',
       description: 'Since January 2024',
-      trend: '100% success rate'
+      trend: '100% success rate',
+      delay: 500
     }
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {cityStats.map((stat, index) => (
         <StatisticCard key={index} {...stat} />
       ))}
