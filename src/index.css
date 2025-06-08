@@ -37,8 +37,8 @@
 
     --nature-green: 34 197 94;
     --nature-blue: 59 130 246;
-    --nature-brown: 133 77 14;
-    --nature-orange: 249 115 22;
+    --nature-teal: 20 184 166;
+    --nature-emerald: 16 185 129;
   }
 
   .dark {
@@ -80,6 +80,7 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -90,6 +91,10 @@
   
   .gradient-sky {
     background: linear-gradient(135deg, rgb(59 130 246) 0%, rgb(16 185 129) 100%);
+  }
+  
+  .gradient-teal {
+    background: linear-gradient(135deg, rgb(20 184 166) 0%, rgb(16 185 129) 100%);
   }
   
   .text-gradient {
@@ -105,12 +110,13 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2;
+  .dark .glass-effect {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .button-pulse {
-    @apply animate-pulse;
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2;
   }
 
   .fade-in {
