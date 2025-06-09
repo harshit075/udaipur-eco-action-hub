@@ -8,7 +8,7 @@ declare global {
 declare namespace google {
   namespace maps {
     class Map {
-      constructor(mapDiv: Element | null, opts?: MapOptions);
+      constructor(mapDiv: HTMLElement, opts?: MapOptions);
     }
     
     class Marker {
@@ -16,21 +16,16 @@ declare namespace google {
     }
     
     interface MapOptions {
-      center?: LatLngLiteral;
+      center?: LatLng | LatLngLiteral;
       zoom?: number;
       styles?: MapTypeStyle[];
     }
     
     interface MarkerOptions {
-      position?: LatLngLiteral;
+      position?: LatLng | LatLngLiteral;
       map?: Map;
       title?: string;
-      label?: MarkerLabel;
-    }
-    
-    interface LatLngLiteral {
-      lat: number;
-      lng: number;
+      label?: string | MarkerLabel;
     }
     
     interface MarkerLabel {
@@ -38,10 +33,26 @@ declare namespace google {
       fontSize?: string;
     }
     
+    interface LatLng {
+      lat(): number;
+      lng(): number;
+    }
+    
+    interface LatLngLiteral {
+      lat: number;
+      lng: number;
+    }
+    
     interface MapTypeStyle {
       featureType?: string;
       elementType?: string;
-      stylers?: Array<{ [key: string]: any }>;
+      stylers?: MapTypeStyler[];
+    }
+    
+    interface MapTypeStyler {
+      color?: string;
+      lightness?: number;
+      saturation?: number;
     }
   }
 }

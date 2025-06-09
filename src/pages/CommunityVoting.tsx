@@ -1,7 +1,9 @@
+
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ThumbsUp, ThumbsDown, MessageCircle, Users, Calendar, MapPin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
