@@ -9,7 +9,7 @@ const PublicDashboard = () => {
   const monthlyGoals = [
     { title: 'Trees to Plant', current: 2847, target: 3000, unit: 'trees', color: 'bg-green-500' },
     { title: 'Cycling Distance', current: 15623, target: 20000, unit: 'km', color: 'bg-blue-500' },
-    { title: 'E-Waste Collection', current: 845, target: 1000, unit: 'kg', color: 'bg-orange-500' },
+    { title: 'E-Waste Collection', current: 845, target: 1000, unit: 'kg', color: 'bg-emerald-500' },
     { title: 'New Volunteers', current: 1250, target: 1500, unit: 'people', color: 'bg-purple-500' }
   ];
 
@@ -45,9 +45,9 @@ const PublicDashboard = () => {
   ];
 
   const getRankIcon = (rank: number) => {
-    if (rank === 1) return <Trophy className="w-4 h-4 text-yellow-500" />;
-    if (rank === 2) return <Award className="w-4 h-4 text-gray-400" />;
-    if (rank === 3) return <Award className="w-4 h-4 text-amber-600" />;
+    if (rank === 1) return <Trophy className="w-4 h-4 text-emerald-500" />;
+    if (rank === 2) return <Award className="w-4 h-4 text-muted-foreground" />;
+    if (rank === 3) return <Award className="w-4 h-4 text-green-600" />;
     return null;
   };
 

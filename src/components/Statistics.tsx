@@ -69,7 +69,7 @@ const Statistics = () => {
       title: 'E-Waste Collected',
       value: '845kg',
       icon: Recycle,
-      color: 'from-orange-500 to-amber-600',
+      color: 'from-green-600 to-emerald-700',
       description: 'From 280+ households',
       trend: '+15% this month',
       delay: 300
