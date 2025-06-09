@@ -1,5 +1,6 @@
 
 import React from 'react';
+import Navbar from '@/components/Navbar';
 import EventCard from '@/components/EventCard';
 
 const Events = () => {
@@ -61,35 +62,38 @@ const Events = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Upcoming <span className="text-gradient">Environmental Events</span>
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Join our weekly environmental activities and make a real difference in Udaipur. 
-            Every Sunday brings a new opportunity to contribute to our city's green future.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {upcomingEvents.map((event, index) => (
-            <EventCard key={index} {...event} />
-          ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              Want to Organize Your Own Event?
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Have an idea for a community environmental event or food donation drive? We'd love to support you!
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <div className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Upcoming <span className="text-gradient">Environmental Events</span>
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Join our weekly environmental activities and make a real difference in Udaipur. 
+              Every Sunday brings a new opportunity to contribute to our city's green future.
             </p>
-            <button className="gradient-nature text-white px-8 py-3 rounded-lg hover:opacity-90 transition-opacity">
-              Propose an Event
-            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {upcomingEvents.map((event, index) => (
+              <EventCard key={index} {...event} />
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                Want to Organize Your Own Event?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Have an idea for a community environmental event or food donation drive? We'd love to support you!
+              </p>
+              <button className="gradient-nature text-white px-8 py-3 rounded-lg hover:opacity-90 transition-opacity">
+                Propose an Event
+              </button>
+            </div>
           </div>
         </div>
       </div>

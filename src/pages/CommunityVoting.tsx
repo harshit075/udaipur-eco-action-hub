@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import Navbar from '@/components/Navbar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
@@ -124,164 +123,167 @@ const CommunityVoting = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Community <span className="text-gradient">Project Voting</span>
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Have your say in shaping Udaipur's future. Vote on local projects and share your feedback 
-            to help build a better community together.
-          </p>
-        </div>
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <div className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Community <span className="text-gradient">Project Voting</span>
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Have your say in shaping Udaipur's future. Vote on local projects and share your feedback 
+              to help build a better community together.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {projects.map((project) => (
-            <Card key={project.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <div className="relative">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="absolute top-4 left-4 flex gap-2">
-                  <Badge className={getStatusColor(project.status)}>
-                    {project.status.replace('-', ' ')}
-                  </Badge>
-                  <Badge className={getCategoryColor(project.category)}>
-                    {project.category}
-                  </Badge>
-                </div>
-              </div>
-
-              <CardHeader>
-                <CardTitle className="text-xl">{project.title}</CardTitle>
-                <p className="text-gray-600 dark:text-gray-300">{project.description}</p>
-              </CardHeader>
-
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-gray-500" />
-                    <span>{project.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-gray-500" />
-                    <span>{project.timeline}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users className="w-4 h-4 text-gray-500" />
-                    <span>{project.budget}</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {projects.map((project) => (
+              <Card key={project.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div className="relative">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute top-4 left-4 flex gap-2">
+                    <Badge className={getStatusColor(project.status)}>
+                      {project.status.replace('-', ' ')}
+                    </Badge>
+                    <Badge className={getCategoryColor(project.category)}>
+                      {project.category}
+                    </Badge>
                   </div>
                 </div>
 
-                {/* Voting Section */}
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-semibold">Community Votes</span>
-                    <span className="text-sm text-gray-500">
-                      {project.votesFor + project.votesAgainst} total votes
-                    </span>
-                  </div>
-                  
-                  <div className="flex gap-4 mb-4">
-                    <Button
-                      onClick={() => handleVote(project.id, 'for')}
-                      variant={userVotes[project.id] === 'for' ? 'default' : 'outline'}
-                      className="flex-1"
-                    >
-                      <ThumbsUp className="w-4 h-4 mr-2" />
-                      Support ({project.votesFor})
-                    </Button>
-                    <Button
-                      onClick={() => handleVote(project.id, 'against')}
-                      variant={userVotes[project.id] === 'against' ? 'destructive' : 'outline'}
-                      className="flex-1"
-                    >
-                      <ThumbsDown className="w-4 h-4 mr-2" />
-                      Oppose ({project.votesAgainst})
-                    </Button>
-                  </div>
+                <CardHeader>
+                  <CardTitle className="text-xl">{project.title}</CardTitle>
+                  <p className="text-gray-600 dark:text-gray-300">{project.description}</p>
+                </CardHeader>
 
-                  {/* Progress Bar */}
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-green-500 h-2 rounded-full transition-all duration-300"
-                      style={{ 
-                        width: `${(project.votesFor / (project.votesFor + project.votesAgainst)) * 100}%` 
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Comments Section */}
-                <div>
-                  <Button
-                    variant="ghost"
-                    onClick={() => setShowComments(prev => ({ 
-                      ...prev, 
-                      [project.id]: !prev[project.id] 
-                    }))}
-                    className="w-full justify-start"
-                  >
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Comments ({project.comments.length})
-                  </Button>
-
-                  {showComments[project.id] && (
-                    <div className="mt-4 space-y-4">
-                      {project.comments.map((comment) => (
-                        <div key={comment.id} className="bg-white dark:bg-gray-700 p-3 rounded-lg">
-                          <div className="flex justify-between items-start mb-2">
-                            <span className="font-medium text-sm">{comment.author}</span>
-                            <span className="text-xs text-gray-500">{comment.timestamp}</span>
-                          </div>
-                          <p className="text-sm text-gray-700 dark:text-gray-300">{comment.comment}</p>
-                        </div>
-                      ))}
-
-                      <div className="flex gap-2">
-                        <Textarea
-                          placeholder="Share your thoughts on this project..."
-                          value={newComments[project.id] || ''}
-                          onChange={(e) => setNewComments(prev => ({ 
-                            ...prev, 
-                            [project.id]: e.target.value 
-                          }))}
-                          rows={3}
-                          className="flex-1"
-                        />
-                        <Button 
-                          onClick={() => handleComment(project.id)}
-                          className="self-end"
-                        >
-                          Post
-                        </Button>
-                      </div>
+                <CardContent className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-gray-500" />
+                      <span>{project.location}</span>
                     </div>
-                  )}
-                </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-gray-500" />
+                      <span>{project.timeline}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Users className="w-4 h-4 text-gray-500" />
+                      <span>{project.budget}</span>
+                    </div>
+                  </div>
+
+                  {/* Voting Section */}
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="font-semibold">Community Votes</span>
+                      <span className="text-sm text-gray-500">
+                        {project.votesFor + project.votesAgainst} total votes
+                      </span>
+                    </div>
+                    
+                    <div className="flex gap-4 mb-4">
+                      <Button
+                        onClick={() => handleVote(project.id, 'for')}
+                        variant={userVotes[project.id] === 'for' ? 'default' : 'outline'}
+                        className="flex-1"
+                      >
+                        <ThumbsUp className="w-4 h-4 mr-2" />
+                        Support ({project.votesFor})
+                      </Button>
+                      <Button
+                        onClick={() => handleVote(project.id, 'against')}
+                        variant={userVotes[project.id] === 'against' ? 'destructive' : 'outline'}
+                        className="flex-1"
+                      >
+                        <ThumbsDown className="w-4 h-4 mr-2" />
+                        Oppose ({project.votesAgainst})
+                      </Button>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                        style={{ 
+                          width: `${(project.votesFor / (project.votesFor + project.votesAgainst)) * 100}%` 
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Comments Section */}
+                  <div>
+                    <Button
+                      variant="ghost"
+                      onClick={() => setShowComments(prev => ({ 
+                        ...prev, 
+                        [project.id]: !prev[project.id] 
+                      }))}
+                      className="w-full justify-start"
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Comments ({project.comments.length})
+                    </Button>
+
+                    {showComments[project.id] && (
+                      <div className="mt-4 space-y-4">
+                        {project.comments.map((comment) => (
+                          <div key={comment.id} className="bg-white dark:bg-gray-700 p-3 rounded-lg">
+                            <div className="flex justify-between items-start mb-2">
+                              <span className="font-medium text-sm">{comment.author}</span>
+                              <span className="text-xs text-gray-500">{comment.timestamp}</span>
+                            </div>
+                            <p className="text-sm text-gray-700 dark:text-gray-300">{comment.comment}</p>
+                          </div>
+                        ))}
+
+                        <div className="flex gap-2">
+                          <Textarea
+                            placeholder="Share your thoughts on this project..."
+                            value={newComments[project.id] || ''}
+                            onChange={(e) => setNewComments(prev => ({ 
+                              ...prev, 
+                              [project.id]: e.target.value 
+                            }))}
+                            rows={3}
+                            className="flex-1"
+                          />
+                          <Button 
+                            onClick={() => handleComment(project.id)}
+                            className="self-end"
+                          >
+                            Post
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center mt-12">
+            <Card className="max-w-2xl mx-auto">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                  Have a Project Idea?
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">
+                  Submit your own project proposal for community consideration and voting.
+                </p>
+                <Button className="gradient-nature text-white px-8 py-3 hover:opacity-90 transition-opacity">
+                  Submit Project Proposal
+                </Button>
               </CardContent>
             </Card>
-          ))}
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-12">
-          <Card className="max-w-2xl mx-auto">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                Have a Project Idea?
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Submit your own project proposal for community consideration and voting.
-              </p>
-              <Button className="gradient-nature text-white px-8 py-3 hover:opacity-90 transition-opacity">
-                Submit Project Proposal
-              </Button>
-            </CardContent>
-          </Card>
+          </div>
         </div>
       </div>
     </div>

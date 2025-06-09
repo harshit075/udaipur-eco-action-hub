@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
+import { Loader } from '@googlemaps/js-api-loader';
 
 interface GoogleMapProps {
   center?: { lat: number; lng: number };
@@ -22,42 +23,49 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   const mapInstanceRef = useRef<google.maps.Map | null>(null);
 
   useEffect(() => {
-    if (!mapRef.current || typeof window === 'undefined' || !window.google) return;
-
-    // Initialize map
-    mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
-      center,
-      zoom,
-      styles: [
-        {
-          featureType: "all",
-          elementType: "geometry.fill",
-          stylers: [{ saturation: -20 }]
-        },
-        {
-          featureType: "water",
-          elementType: "geometry",
-          stylers: [{ color: "#46bcec" }, { lightness: 10 }]
-        }
-      ]
+    const loader = new Loader({
+      apiKey: 'AIzaSyD6mWbwAlmZeZrC7EwDMSsb8bxrdu-rr5U',
+      version: 'weekly',
     });
 
-    // Add markers
-    markers.forEach(marker => {
-      const markerIcon = {
-        tree: '🌳',
-        cleanup: '🧹',
-        ewaste: '♻️'
-      };
+    loader.load().then(() => {
+      if (!mapRef.current) return;
 
-      new window.google.maps.Marker({
-        position: marker.position,
-        map: mapInstanceRef.current,
-        title: marker.title,
-        label: {
-          text: markerIcon[marker.type],
-          fontSize: '20px'
-        }
+      // Initialize map
+      mapInstanceRef.current = new google.maps.Map(mapRef.current, {
+        center,
+        zoom,
+        styles: [
+          {
+            featureType: "all",
+            elementType: "geometry.fill",
+            stylers: [{ saturation: -20 }]
+          },
+          {
+            featureType: "water",
+            elementType: "geometry",
+            stylers: [{ color: "#46bcec" }, { lightness: 10 }]
+          }
+        ]
+      });
+
+      // Add markers
+      markers.forEach(marker => {
+        const markerIcon = {
+          tree: '🌳',
+          cleanup: '🧹',
+          ewaste: '♻️'
+        };
+
+        new google.maps.Marker({
+          position: marker.position,
+          map: mapInstanceRef.current,
+          title: marker.title,
+          label: {
+            text: markerIcon[marker.type],
+            fontSize: '20px'
+          }
+        });
       });
     });
   }, [center, zoom, markers]);
