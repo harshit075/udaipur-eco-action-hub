@@ -22,10 +22,10 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   const mapInstanceRef = useRef<google.maps.Map | null>(null);
 
   useEffect(() => {
-    if (!mapRef.current || !window.google) return;
+    if (!mapRef.current || typeof window === 'undefined' || !window.google) return;
 
     // Initialize map
-    mapInstanceRef.current = new google.maps.Map(mapRef.current, {
+    mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
       center,
       zoom,
       styles: [
@@ -50,7 +50,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
         ewaste: '♻️'
       };
 
-      new google.maps.Marker({
+      new window.google.maps.Marker({
         position: marker.position,
         map: mapInstanceRef.current,
         title: marker.title,

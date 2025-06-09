@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Events from "./pages/Events";
 import Donate from "./pages/Donate";
 import Dashboard from "./pages/Dashboard";
+import CommunityVoting from "./pages/CommunityVoting";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/events" element={<Events />} />
             <Route path="/donate" element={<Donate />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/community-voting" element={<CommunityVoting />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <ChatBot />

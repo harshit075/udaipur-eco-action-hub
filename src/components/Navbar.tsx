@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { Menu, X, TreePine, Users, Calendar, BarChart3 } from 'lucide-react';
+import { Menu, X, TreePine, Users, Calendar, BarChart3, Vote } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +12,7 @@ const Navbar = () => {
     { name: 'Home', href: '/', icon: TreePine },
     { name: 'Events', href: '/events', icon: Calendar },
     { name: 'Donate', href: '/donate', icon: Users },
+    { name: 'Voting', href: '/community-voting', icon: Vote },
     { name: 'Impact', href: '/dashboard', icon: BarChart3 },
   ];
 
