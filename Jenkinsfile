@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/yourusername/yourproject.git'
+                git 'https://github.com/harshit075/udaipur-eco-action-hub.git'
             }
         }
 
