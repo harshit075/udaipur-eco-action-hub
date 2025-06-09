@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -36,13 +35,13 @@ const CommunityVoting = () => {
       title: 'Smart Traffic Management System',
       description: 'Implementation of AI-powered traffic lights and smart sensors to reduce traffic congestion in the city center.',
       image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&h=600&fit=crop',
-      status: 'under-construction',
+      status: 'under-construction' as const,
       votesFor: 342,
       votesAgainst: 45,
       location: 'City Center',
       timeline: '6 months',
       budget: '₹2.5 Crores',
-      category: 'technology',
+      category: 'technology' as const,
       comments: [
         { id: '1', author: 'Rajesh Kumar', comment: 'This will greatly help reduce traffic jams during peak hours!', timestamp: '2 days ago' },
         { id: '2', author: 'Priya Sharma', comment: 'What about the environmental impact?', timestamp: '1 day ago' }
@@ -53,13 +52,13 @@ const CommunityVoting = () => {
       title: 'Fateh Sagar Lake Beautification',
       description: 'Comprehensive beautification project including walkways, gardens, and water quality improvement for Fateh Sagar Lake.',
       image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=600&fit=crop',
-      status: 'upcoming',
+      status: 'upcoming' as const,
       votesFor: 567,
       votesAgainst: 23,
       location: 'Fateh Sagar Lake',
       timeline: '8 months',
       budget: '₹4.2 Crores',
-      category: 'environment',
+      category: 'environment' as const,
       comments: [
         { id: '3', author: 'Amit Jain', comment: 'This is exactly what our city needs!', timestamp: '3 hours ago' }
       ]
@@ -69,13 +68,13 @@ const CommunityVoting = () => {
       title: 'Community Solar Power Grid',
       description: 'Installation of solar panels on government buildings and creation of a community solar power sharing system.',
       image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop',
-      status: 'upcoming',
+      status: 'upcoming' as const,
       votesFor: 289,
       votesAgainst: 67,
       location: 'Multiple Locations',
       timeline: '12 months',
       budget: '₹6.8 Crores',
-      category: 'environment',
+      category: 'environment' as const,
       comments: []
     }
   ]);
@@ -107,33 +106,33 @@ const CommunityVoting = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'under-construction': return 'bg-amber-100 text-amber-800';
-      case 'upcoming': return 'bg-blue-100 text-blue-800';
-      case 'completed': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'under-construction': return 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300';
+      case 'upcoming': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300';
+      case 'completed': return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300';
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'infrastructure': return 'bg-purple-100 text-purple-800';
-      case 'environment': return 'bg-green-100 text-green-800';
-      case 'community': return 'bg-pink-100 text-pink-800';
-      case 'technology': return 'bg-blue-100 text-blue-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'infrastructure': return 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300';
+      case 'environment': return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300';
+      case 'community': return 'bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-300';
+      case 'technology': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300';
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
     }
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
+      <div className="bg-gradient-to-br from-primary/5 to-accent/5 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            <h1 className="text-4xl font-bold text-foreground mb-4">
               Community <span className="text-gradient">Project Voting</span>
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Have your say in shaping Udaipur's future. Vote on local projects and share your feedback 
               to help build a better community together.
             </p>
@@ -160,30 +159,30 @@ const CommunityVoting = () => {
 
                 <CardHeader>
                   <CardTitle className="text-xl">{project.title}</CardTitle>
-                  <p className="text-gray-600 dark:text-gray-300">{project.description}</p>
+                  <p className="text-muted-foreground">{project.description}</p>
                 </CardHeader>
 
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-gray-500" />
+                      <MapPin className="w-4 h-4 text-muted-foreground" />
                       <span>{project.location}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-500" />
+                      <Calendar className="w-4 h-4 text-muted-foreground" />
                       <span>{project.timeline}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4 text-gray-500" />
+                      <Users className="w-4 h-4 text-muted-foreground" />
                       <span>{project.budget}</span>
                     </div>
                   </div>
 
                   {/* Voting Section */}
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                  <div className="bg-muted rounded-lg p-4">
                     <div className="flex items-center justify-between mb-4">
                       <span className="font-semibold">Community Votes</span>
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-muted-foreground">
                         {project.votesFor + project.votesAgainst} total votes
                       </span>
                     </div>
@@ -208,9 +207,9 @@ const CommunityVoting = () => {
                     </div>
 
                     {/* Progress Bar */}
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-border rounded-full h-2">
                       <div 
-                        className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                        className="bg-primary h-2 rounded-full transition-all duration-300"
                         style={{ 
                           width: `${(project.votesFor / (project.votesFor + project.votesAgainst)) * 100}%` 
                         }}
@@ -235,12 +234,12 @@ const CommunityVoting = () => {
                     {showComments[project.id] && (
                       <div className="mt-4 space-y-4">
                         {project.comments.map((comment) => (
-                          <div key={comment.id} className="bg-white dark:bg-gray-700 p-3 rounded-lg">
+                          <div key={comment.id} className="bg-card p-3 rounded-lg">
                             <div className="flex justify-between items-start mb-2">
                               <span className="font-medium text-sm">{comment.author}</span>
-                              <span className="text-xs text-gray-500">{comment.timestamp}</span>
+                              <span className="text-xs text-muted-foreground">{comment.timestamp}</span>
                             </div>
-                            <p className="text-sm text-gray-700 dark:text-gray-300">{comment.comment}</p>
+                            <p className="text-sm text-muted-foreground">{comment.comment}</p>
                           </div>
                         ))}
 
@@ -274,10 +273,10 @@ const CommunityVoting = () => {
           <div className="text-center mt-12">
             <Card className="max-w-2xl mx-auto">
               <CardContent className="p-8">
-                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                <h3 className="text-2xl font-semibold text-foreground mb-4">
                   Have a Project Idea?
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
+                <p className="text-muted-foreground mb-6">
                   Submit your own project proposal for community consideration and voting.
                 </p>
                 <Button className="gradient-nature text-white px-8 py-3 hover:opacity-90 transition-opacity">

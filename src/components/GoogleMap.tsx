@@ -6,69 +6,56 @@ interface GoogleMapProps {
   center?: { lat: number; lng: number };
   zoom?: number;
   className?: string;
-  markers?: Array<{
-    position: { lat: number; lng: number };
-    title: string;
-    type: 'tree' | 'cleanup' | 'ewaste';
-  }>;
 }
 
 const GoogleMap: React.FC<GoogleMapProps> = ({
   center = { lat: 24.5854, lng: 73.7125 }, // Udaipur coordinates
-  zoom = 12,
-  className = "w-full h-96 rounded-lg",
-  markers = []
+  zoom = 13,
+  className = "w-full h-64 rounded-lg"
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<google.maps.Map | null>(null);
 
   useEffect(() => {
-    const loader = new Loader({
-      apiKey: 'AIzaSyD6mWbwAlmZeZrC7EwDMSsb8bxrdu-rr5U',
-      version: 'weekly',
-    });
-
-    loader.load().then(() => {
-      if (!mapRef.current) return;
-
-      // Initialize map
-      mapInstanceRef.current = new google.maps.Map(mapRef.current, {
-        center,
-        zoom,
-        styles: [
-          {
-            featureType: "all",
-            elementType: "geometry.fill",
-            stylers: [{ saturation: -20 }]
-          },
-          {
-            featureType: "water",
-            elementType: "geometry",
-            stylers: [{ color: "#46bcec" }, { lightness: 10 }]
-          }
-        ]
+    const initMap = async () => {
+      const loader = new Loader({
+        apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '',
+        version: 'weekly',
       });
 
-      // Add markers
-      markers.forEach(marker => {
-        const markerIcon = {
-          tree: '🌳',
-          cleanup: '🧹',
-          ewaste: '♻️'
-        };
+      try {
+        await loader.load();
+        
+        if (mapRef.current && window.google) {
+          const map = new window.google.maps.Map(mapRef.current, {
+            center,
+            zoom,
+            styles: [
+              {
+                featureType: 'water',
+                elementType: 'all',
+                stylers: [{ color: '#10b981' }]
+              },
+              {
+                featureType: 'landscape',
+                elementType: 'all',
+                stylers: [{ color: '#f3f4f6' }]
+              }
+            ]
+          });
 
-        new google.maps.Marker({
-          position: marker.position,
-          map: mapInstanceRef.current,
-          title: marker.title,
-          label: {
-            text: markerIcon[marker.type],
-            fontSize: '20px'
-          }
-        });
-      });
-    });
-  }, [center, zoom, markers]);
+          new window.google.maps.Marker({
+            position: center,
+            map: map,
+            title: 'Event Location'
+          });
+        }
+      } catch (error) {
+        console.error('Error loading Google Maps:', error);
+      }
+    };
+
+    initMap();
+  }, [center, zoom]);
 
   return <div ref={mapRef} className={className} />;
 };

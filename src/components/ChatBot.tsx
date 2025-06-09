@@ -17,7 +17,7 @@ const ChatBot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m here to help you with questions about EcoUdaipur. How can I assist you today?',
+      text: 'Hello! I\'m EcoBot, your environmental assistant. I can help you with donations, events, impact tracking, and community projects. How can I help you today?',
       sender: 'bot',
       timestamp: new Date()
     }
@@ -25,33 +25,58 @@ const ChatBot = () => {
   const [inputMessage, setInputMessage] = useState('');
 
   const commonQuestions = [
-    { question: "How can I donate seeds?", answer: "You can donate seeds by visiting our Donate page and filling out the seed donation form. We accept native species seeds for our plantation drives." },
-    { question: "When are the next events?", answer: "We organize events every Sunday! Check our Events page for upcoming tree plantation drives, lake cleanups, and cycling marathons." },
-    { question: "How can I track my impact?", answer: "Visit your Dashboard to see your personal contributions including trees planted, waste collected, and events attended." },
-    { question: "What types of e-waste do you accept?", answer: "We accept all types of electronic waste including phones, computers, batteries, and small appliances for proper recycling." }
+    { 
+      keywords: ["donate", "seed", "seeds", "plant"], 
+      answer: "You can donate seeds by visiting our Donate page. We accept native species seeds for plantation drives. We also accept food donations and e-waste for proper recycling." 
+    },
+    { 
+      keywords: ["food", "donation", "hungry", "meal"], 
+      answer: "We organize food donation drives every Sunday! You can donate food items or host your own food drive. Check our Events page to join upcoming food donation events." 
+    },
+    { 
+      keywords: ["event", "events", "when", "next", "upcoming"], 
+      answer: "We organize events every Sunday including tree plantation drives, lake cleanups, cycling marathons, and food donation drives. Visit our Events page for the complete schedule." 
+    },
+    { 
+      keywords: ["track", "dashboard", "impact", "contribution"], 
+      answer: "Visit your Dashboard to see your personal environmental impact including trees planted, waste collected, events attended, and food donated. Every action counts!" 
+    },
+    { 
+      keywords: ["waste", "e-waste", "electronic", "recycle"], 
+      answer: "We accept all types of electronic waste including phones, computers, batteries, tablets, and small appliances for proper eco-friendly recycling." 
+    },
+    { 
+      keywords: ["vote", "voting", "project", "community"], 
+      answer: "You can vote on local community projects on our Community Voting page. Share your opinion on infrastructure, environmental, and technology projects shaping Udaipur's future." 
+    },
+    { 
+      keywords: ["lake", "cleanup", "water", "pollution"], 
+      answer: "We organize regular lake cleanup drives to preserve Udaipur's beautiful lakes. Join us to keep Fateh Sagar, Pichola, and other lakes clean and pristine." 
+    },
+    { 
+      keywords: ["cycle", "cycling", "bike", "marathon"], 
+      answer: "Join our cycling marathons to promote eco-friendly transportation! We organize group cycling events around Udaipur's scenic routes every weekend." 
+    },
+    { 
+      keywords: ["tree", "plant", "plantation", "forest"], 
+      answer: "Our tree plantation drives happen every Sunday at different locations. We've planted over 2,847 trees so far! Bring your family and help us create urban forests." 
+    },
+    { 
+      keywords: ["volunteer", "help", "join", "participate"], 
+      answer: "Great! You can volunteer by joining our events, donating items, voting on projects, or hosting your own drives. Every small action creates a big environmental impact." 
+    }
   ];
 
   const getBotResponse = (userMessage: string): string => {
     const lowerMessage = userMessage.toLowerCase();
     
     for (const qa of commonQuestions) {
-      if (qa.question.toLowerCase().includes(lowerMessage) || 
-          lowerMessage.includes(qa.question.toLowerCase().split(' ')[0])) {
+      if (qa.keywords.some(keyword => lowerMessage.includes(keyword))) {
         return qa.answer;
       }
     }
     
-    if (lowerMessage.includes('donate') || lowerMessage.includes('seed')) {
-      return commonQuestions[0].answer;
-    } else if (lowerMessage.includes('event') || lowerMessage.includes('when')) {
-      return commonQuestions[1].answer;
-    } else if (lowerMessage.includes('track') || lowerMessage.includes('dashboard')) {
-      return commonQuestions[2].answer;
-    } else if (lowerMessage.includes('waste') || lowerMessage.includes('e-waste')) {
-      return commonQuestions[3].answer;
-    }
-    
-    return "I'm here to help with questions about our environmental initiatives. You can ask me about donations, events, tracking your impact, or e-waste collection!";
+    return "I'm here to help with environmental initiatives in Udaipur! You can ask me about:\n• Seed, food, and e-waste donations\n• Upcoming events and volunteering\n• Tracking your environmental impact\n• Community project voting\n• Lake cleanups and tree plantation\n\nWhat would you like to know more about?";
   };
 
   const handleSendMessage = () => {
@@ -97,7 +122,7 @@ const ChatBot = () => {
           <CardHeader className="gradient-nature text-white rounded-t-lg">
             <CardTitle className="text-lg flex items-center gap-2">
               <MessageCircle className="w-5 h-5" />
-              EcoUdaipur Assistant
+              EcoBot Assistant
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0 flex flex-col h-80">
@@ -109,7 +134,7 @@ const ChatBot = () => {
                   className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-xs px-3 py-2 rounded-lg text-sm ${
+                    className={`max-w-xs px-3 py-2 rounded-lg text-sm whitespace-pre-line ${
                       message.sender === 'user'
                         ? 'bg-primary text-white'
                         : 'bg-muted text-foreground'
