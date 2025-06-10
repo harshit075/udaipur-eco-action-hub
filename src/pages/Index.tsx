@@ -1,73 +1,39 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import Hero from '@/components/Hero';
-import Statistics from '@/components/Statistics';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { TreePine, Bike, Users, MapPin, Calendar, Award, BarChart3, ArrowRight, Heart, Vote } from 'lucide-react';
+import Hero from "@/components/Hero";
+import Navbar from "@/components/Navbar";
+import Statistics from "@/components/Statistics";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MapPin, Calendar, Users, ArrowRight, Play, Heart, Vote } from "lucide-react";
 
 const Index = () => {
-  const features = [
+  const upcomingEvents = [
     {
-      icon: TreePine,
-      title: 'Tree Plantation',
-      description: 'Join weekly plantation drives and help create urban forests in Udaipur',
-      color: 'from-green-500 to-emerald-600',
-      stats: '2,847 trees planted'
+      title: 'Tree Plantation Drive',
+      date: 'June 15, 2025',
+      location: 'Fateh Sagar Lake',
+      image: 'https://images.unsplash.com/photo-1574263867128-a3d5c1b1dedc?w=600&h=400&fit=crop'
     },
     {
-      icon: Bike,
-      title: 'Cycling Marathon',
-      description: 'Promote eco-friendly transportation through community cycling events',
-      color: 'from-blue-500 to-cyan-600',
-      stats: '15,623 km cycled'
-    },
-    {
-      icon: Users,
-      title: 'Lake Cleanup',
-      description: 'Preserve the beauty of our lakes through regular cleanup initiatives',
-      color: 'from-emerald-500 to-teal-600',
-      stats: '12 lakes cleaned'
-    },
-    {
-      icon: Heart,
-      title: 'Food Donation',
-      description: 'Help feed the hungry through community food donation drives',
-      color: 'from-orange-500 to-red-500',
-      stats: '1,250 meals provided'
+      title: 'Community Food Drive',
+      date: 'June 16, 2025', 
+      location: 'City Palace',
+      image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=600&h=400&fit=crop'
     }
   ];
 
-  const quickActions = [
-    { 
-      title: 'Donate Seeds & Food', 
-      description: 'Contribute seeds, food, and e-waste for sustainability', 
-      href: '/donate',
-      icon: TreePine,
-      color: 'from-green-500 to-emerald-600'
+  const successStories = [
+    {
+      title: 'Lake Restoration Success',
+      description: 'How we cleaned Pichola Lake with community effort',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=600&fit=crop',
+      impact: '2,000 kg waste removed'
     },
-    { 
-      title: 'Vote on Projects', 
-      description: 'Shape Udaipur\'s future through community voting', 
-      href: '/community-voting',
-      icon: Vote,
-      color: 'from-purple-500 to-violet-600'
-    },
-    { 
-      title: 'Join Next Event', 
-      description: 'Participate in upcoming activities and drives', 
-      href: '/events',
-      icon: Calendar,
-      color: 'from-blue-500 to-cyan-600'
-    },
-    { 
-      title: 'Track Your Impact', 
-      description: 'Monitor your environmental contributions', 
-      href: '/dashboard',
-      icon: BarChart3,
-      color: 'from-indigo-500 to-purple-600'
+    {
+      title: 'Urban Forest Creation',
+      description: 'Creating green spaces in the heart of Udaipur',
+      image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=600&fit=crop',
+      impact: '1,500 trees planted'
     }
   ];
 
@@ -76,252 +42,152 @@ const Index = () => {
       <Navbar />
       <Hero />
       
-      {/* Public Transparency Section */}
-      <section className="py-24 bg-card relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center mb-20 slide-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              <span className="text-gradient">Transparent</span> Community Impact
+      {/* Interactive Statistics Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-green-50 dark:from-gray-900 dark:to-green-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-4">
+              Real Impact, Real Numbers
             </h2>
-            <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              Track our collective environmental progress in real-time. Every contribution counts towards a greener Udaipur.
+            <p className="text-xl text-muted-foreground">
+              See how our community is making a difference every day
             </p>
           </div>
-          
-          <div className="fade-in">
-            <Statistics />
-          </div>
-          
-          <div className="text-center mt-16 slide-up">
-            <Link to="/dashboard">
-              <Button className="gradient-nature text-white px-10 py-4 text-lg hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl card-hover">
-                <BarChart3 className="w-5 h-5 mr-3" />
-                View Full Public Dashboard
-                <ArrowRight className="w-5 h-5 ml-3" />
-              </Button>
-            </Link>
-          </div>
+          <Statistics />
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24 bg-background">
+      {/* Video Stories Section */}
+      <section className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20 slide-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              How We're Making a <span className="text-gradient">Difference</span>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-4">
+              Success Stories
             </h2>
-            <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              Four key initiatives driving environmental change in Udaipur through community participation
+            <p className="text-xl text-muted-foreground">
+              Watch how we're transforming Udaipur together
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <Card key={index} className="text-center card-hover border-0 shadow-xl bg-card fade-in" style={{ animationDelay: `${index * 200}ms` }}>
-                <CardHeader className="pb-6">
-                  <div className={`w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center shadow-lg`}>
-                    <feature.icon className="w-10 h-10 text-white" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {successStories.map((story, index) => (
+              <div key={index} className="group cursor-pointer">
+                <div className="relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
+                  <img 
+                    src={story.image} 
+                    alt={story.title}
+                    className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <Play className="w-8 h-8 text-white ml-1" />
+                    </div>
                   </div>
-                  <CardTitle className="text-xl mb-4 text-card-foreground">{feature.title}</CardTitle>
-                  <div className="text-sm font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full inline-block">
-                    {feature.stats}
+                  <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <h3 className="text-2xl font-bold text-white mb-2">{story.title}</h3>
+                    <p className="text-gray-200 mb-4">{story.description}</p>
+                    <div className="bg-green-600 text-white px-4 py-2 rounded-full text-sm w-fit">
+                      {story.impact}
+                    </div>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Community Voting Section */}
-      <section className="py-24 bg-card">
+      {/* Interactive Events Section */}
+      <section className="py-20 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20 slide-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              <span className="text-gradient">Community</span> Driven Decisions
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-4">
+              Upcoming Events
             </h2>
-            <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              Have your say in shaping Udaipur's future. Vote on local projects and infrastructure development.
+            <p className="text-xl text-muted-foreground">
+              Join our next environmental activities
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="card-hover border-0 shadow-xl bg-gradient-to-br from-purple-500/10 to-violet-500/10">
-              <CardContent className="p-8 text-center space-y-6">
-                <div className="w-16 h-16 mx-auto rounded-xl gradient-purple flex items-center justify-center shadow-lg">
-                  <Vote className="w-8 h-8 text-white" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {upcomingEvents.map((event, index) => (
+              <Card key={index} className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                <div className="relative">
+                  <img 
+                    src={event.image} 
+                    alt={event.title}
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <h3 className="text-xl font-bold">{event.title}</h3>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-card-foreground">Active Projects</h3>
-                <p className="text-muted-foreground">3 projects awaiting community votes</p>
-                <div className="text-3xl font-bold text-primary">87%</div>
-                <p className="text-sm text-muted-foreground">Community participation rate</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="card-hover border-0 shadow-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10">
-              <CardContent className="p-8 text-center space-y-6">
-                <div className="w-16 h-16 mx-auto rounded-xl gradient-sky flex items-center justify-center shadow-lg">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-card-foreground">Community Voices</h3>
-                <p className="text-muted-foreground">Every opinion matters in our decisions</p>
-                <div className="text-3xl font-bold text-primary">1,247</div>
-                <p className="text-sm text-muted-foreground">Total votes cast this month</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="card-hover border-0 shadow-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10">
-              <CardContent className="p-8 text-center space-y-6">
-                <div className="w-16 h-16 mx-auto rounded-xl gradient-nature flex items-center justify-center shadow-lg">
-                  <Award className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-card-foreground">Completed Projects</h3>
-                <p className="text-muted-foreground">Community-approved projects delivered</p>
-                <div className="text-3xl font-bold text-primary">15</div>
-                <p className="text-sm text-muted-foreground">Successfully completed this year</p>
-              </CardContent>
-            </Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-4 text-muted-foreground mb-4">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>{event.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4" />
+                      <span>{event.location}</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white">
+                    Join Event
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
           
-          <div className="text-center mt-12">
-            <Link to="/community-voting">
-              <Button className="gradient-purple text-white px-8 py-3 hover:opacity-90 transition-opacity">
-                <Vote className="w-5 h-5 mr-2" />
-                Vote on Current Projects
-              </Button>
-            </Link>
+          <div className="text-center">
+            <Button size="lg" variant="outline" className="border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-8 py-3">
+              View All Events
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Food Donation Highlight */}
-      <section className="py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-                Feed the <span className="text-gradient">Community</span>
-              </h2>
-              <p className="text-xl text-muted-foreground leading-relaxed">
-                Join our Sunday food donation drives to help feed those in need. Every meal shared makes our community stronger and more compassionate.
+      {/* Call to Action Section */}
+      <section className="py-20 bg-gradient-to-r from-green-900 to-emerald-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl font-bold mb-6">
+            Ready to Make Udaipur Greener?
+          </h2>
+          <p className="text-xl mb-12 max-w-3xl mx-auto text-green-100">
+            Every action counts. Whether it's planting a tree, donating food, or voting on community projects, 
+            your contribution helps build a sustainable future for Udaipur.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/20 transition-all duration-300">
+              <Heart className="w-12 h-12 text-green-400 mx-auto mb-4" />
+              <h3 className="text-xl font-bold mb-4">Make a Donation</h3>
+              <p className="text-green-100 mb-6">
+                Donate seeds, e-waste, or food to support our community initiatives
               </p>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">1,250</div>
-                  <div className="text-muted-foreground">Meals Provided</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">24</div>
-                  <div className="text-muted-foreground">Food Drives</div>
-                </div>
-              </div>
-              <Link to="/donate">
-                <Button className="gradient-orange text-white px-8 py-3 hover:opacity-90 transition-opacity">
-                  <Heart className="w-5 h-5 mr-2" />
-                  Donate Food Items
-                </Button>
-              </Link>
+              <Button className="bg-white text-green-900 hover:bg-gray-100 w-full">
+                Donate Now
+              </Button>
             </div>
             
-            <Card className="card-hover border-0 shadow-xl bg-gradient-to-br from-orange-500/10 to-red-500/10">
-              <CardContent className="p-8">
-                <div className="space-y-6">
-                  <div className="text-center">
-                    <div className="w-20 h-20 mx-auto mb-6 rounded-2xl gradient-orange flex items-center justify-center shadow-lg">
-                      <Heart className="w-10 h-10 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-semibold text-card-foreground mb-4">Next Food Drive</h3>
-                    <p className="text-muted-foreground">This Sunday at Community Center</p>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Time:</span>
-                      <span className="font-medium text-card-foreground">10:00 AM - 2:00 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Location:</span>
-                      <span className="font-medium text-card-foreground">Fateh Sagar Area</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Volunteers:</span>
-                      <span className="font-medium text-card-foreground">32 registered</span>
-                    </div>
-                  </div>
-                  
-                  <Link to="/events">
-                    <Button className="w-full gradient-orange text-white hover:opacity-90 transition-opacity">
-                      Join This Drive
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Actions */}
-      <section className="py-24 bg-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20 slide-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Ready to Take <span className="text-gradient">Action?</span>
-            </h2>
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              Choose how you want to contribute to a greener, more caring Udaipur
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {quickActions.map((action, index) => (
-              <Card key={index} className="card-hover border-0 shadow-xl bg-card group fade-in" style={{ animationDelay: `${index * 150}ms` }}>
-                <CardContent className="p-8 text-center space-y-6">
-                  <div className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    <action.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-card-foreground">{action.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{action.description}</p>
-                  <Link to={action.href}>
-                    <Button className="w-full gradient-nature text-white hover:opacity-90 transition-all duration-300 shadow-md hover:shadow-lg py-3">
-                      Get Started
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center space-y-8">
-            <div className="flex items-center justify-center space-x-3">
-              <div className="w-12 h-12 gradient-nature rounded-xl flex items-center justify-center shadow-lg">
-                <TreePine className="w-7 h-7 text-white" />
-              </div>
-              <span className="text-3xl font-bold">EcoUdaipur</span>
-            </div>
-            <p className="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto">
-              Building a sustainable future for Udaipur, one action at a time.
-            </p>
-            <div className="flex justify-center space-x-8">
-              <Link to="/events" className="text-gray-300 hover:text-white transition-colors text-lg font-medium">Events</Link>
-              <Link to="/donate" className="text-gray-300 hover:text-white transition-colors text-lg font-medium">Donate</Link>
-              <Link to="/community-voting" className="text-gray-300 hover:text-white transition-colors text-lg font-medium">Voting</Link>
-              <Link to="/dashboard" className="text-gray-300 hover:text-white transition-colors text-lg font-medium">Dashboard</Link>
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/20 transition-all duration-300">
+              <Vote className="w-12 h-12 text-green-400 mx-auto mb-4" />
+              <h3 className="text-xl font-bold mb-4">Community Voting</h3>
+              <p className="text-green-100 mb-6">
+                Have your say in city development projects and community decisions
+              </p>
+              <Button className="bg-white text-green-900 hover:bg-gray-100 w-full">
+                Vote Now
+              </Button>
             </div>
           </div>
         </div>
-      </footer>
+      </section>
     </div>
   );
 };
