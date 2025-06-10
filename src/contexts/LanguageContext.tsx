@@ -16,7 +16,10 @@ const translations = {
     events: 'Events',
     donate: 'Donate',
     dashboard: 'Dashboard',
+    impact: 'Impact',
+    voting: 'Voting',
     communityVoting: 'Community Voting',
+    joinCommunity: 'Join Community',
     
     // Hero Section
     heroTitle: 'EcoUdaipur',
@@ -27,8 +30,6 @@ const translations = {
     // Features
     foodDonation: 'Food Donation',
     foodDonationDesc: 'Help feed the hungry in our community with fresh, nutritious meals',
-    communityVoting: 'Community Voting',
-    communityVotingDesc: 'Have your say in local environmental projects and initiatives',
     treePlantation: 'Tree Plantation',
     treePlantationDesc: 'Join us in making Udaipur greener, one tree at a time',
     
@@ -67,7 +68,6 @@ const translations = {
     voteNow: 'Vote Now',
     
     // Community Form
-    joinCommunity: 'Join Our Community',
     joinCommunityDesc: 'Be part of the change and help build a sustainable Udaipur',
     fullName: 'Full Name',
     email: 'Email Address',
@@ -98,7 +98,10 @@ const translations = {
     events: 'इवेंट्स',
     donate: 'दान करें',
     dashboard: 'डैशबोर्ड',
+    impact: 'प्रभाव',
+    voting: 'वोटिंग',
     communityVoting: 'सामुदायिक वोटिंग',
+    joinCommunity: 'समुदाय में शामिल हों',
     
     // Hero Section
     heroTitle: 'इकोउदयपुर',
@@ -109,8 +112,6 @@ const translations = {
     // Features
     foodDonation: 'भोजन दान',
     foodDonationDesc: 'ताजे, पौष्टिक भोजन के साथ हमारे समुदाय के भूखे लोगों की मदद करें',
-    communityVoting: 'सामुदायिक वोटिंग',
-    communityVotingDesc: 'स्थानीय पर्यावरण परियोजनाओं और पहलों में अपनी राय दें',
     treePlantation: 'वृक्षारोपण',
     treePlantationDesc: 'उदयपुर को हरा-भरा बनाने में हमारे साथ जुड़ें, एक पेड़ एक बार में',
     
@@ -149,7 +150,6 @@ const translations = {
     voteNow: 'अभी वोट करें',
     
     // Community Form
-    joinCommunity: 'हमारे समुदाय से जुड़ें',
     joinCommunityDesc: 'बदलाव का हिस्सा बनें और एक टिकाऊ उदयपुर बनाने में मदद करें',
     fullName: 'पूरा नाम',
     email: 'ईमेल पता',
