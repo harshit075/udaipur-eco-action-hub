@@ -4,7 +4,9 @@ import { Button } from '@/components/ui/button';
 import { TreePine, Bike, Users, Heart, Vote, Play, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageToggle from './LanguageToggle';
-import Scene3D from './Scene3D';
+
+// Lazy load the 3D scene to prevent initial loading issues
+const Scene3D = React.lazy(() => import('./Scene3D'));
 
 const Hero = () => {
   const { t } = useLanguage();
@@ -60,10 +62,15 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-green-900/40 to-emerald-900/60"></div>
       </div>
 
-      {/* Floating 3D Scene */}
+      {/* Floating 3D Scene with Error Boundary */}
       <div className="absolute top-20 right-10 w-96 h-96 z-10 hidden lg:block">
         <Suspense fallback={
-          <div className="w-full h-full bg-gradient-to-br from-green-400/20 to-emerald-600/20 rounded-full animate-pulse backdrop-blur-sm border border-white/10"></div>
+          <div className="w-full h-full bg-gradient-to-br from-green-400/20 to-emerald-600/20 rounded-full animate-pulse backdrop-blur-sm border border-white/10 flex items-center justify-center">
+            <div className="text-white text-center">
+              <TreePine className="w-12 h-12 mx-auto mb-2" />
+              <div>Loading...</div>
+            </div>
+          </div>
         }>
           <Scene3D />
         </Suspense>

@@ -18,8 +18,8 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="dark" storageKey="eco-udaipur-theme">
-      <LanguageProvider>
+    <LanguageProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="eco-udaipur-theme">
         <TooltipProvider>
           <Toaster />
           <Sonner />
@@ -35,8 +35,8 @@ const App = () => (
             <ChatBot />
           </BrowserRouter>
         </TooltipProvider>
-      </LanguageProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </LanguageProvider>
   </QueryClientProvider>
 );
 
