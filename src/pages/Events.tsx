@@ -1,109 +1,146 @@
 
-import React from 'react';
-import Navbar from '@/components/Navbar';
-import EventCard from '@/components/EventCard';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, MapPin, Users, Clock, ArrowRight } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageToggle from "@/components/LanguageToggle";
 
 const Events = () => {
-  const upcomingEvents = [
+  const { t } = useLanguage();
+
+  const events = [
     {
-      title: 'Tree Plantation Drive / वृक्षारोपण अभियान',
-      date: 'Sunday, June 9, 2025',
-      time: '7:00 AM - 10:00 AM',
-      location: 'Fateh Sagar Lake Area / फतेह सागर झील क्षेत्र',
-      participants: 84,
-      description: 'Join us for a community tree plantation drive around Fateh Sagar Lake. We will plant native species and create a greener future together. / फतेह सागर झील के आसपास पेड़ लगाने के लिए हमारे साथ जुड़ें।',
-      type: 'plantation' as const
+      id: 1,
+      title: t('treePlantation'),
+      description: "Join us for a massive tree plantation drive to increase green cover in Udaipur",
+      date: "2024-12-15",
+      time: "08:00 AM",
+      location: "Fateh Sagar Lake",
+      attendees: 150,
+      image: "https://images.unsplash.com/photo-1574263867128-a3d5c1b1dedc?w=800&h=600&fit=crop",
+      category: t('environment'),
+      status: "upcoming"
     },
     {
-      title: 'Community Food Drive / सामुदायिक भोजन वितरण',
-      date: 'Sunday, June 9, 2025',
-      time: '5:00 PM - 8:00 PM',
-      location: 'City Palace Community Center / सिटी पैलेस कम्युनिटी सेंटर',
-      participants: 127,
-      description: 'Help distribute meals to underprivileged families. Bring packaged food items or volunteer to help serve meals to the community. / जरूरतमंद परिवारों को भोजन वितरित करने में मदद करें।',
-      type: 'cleanup' as const
+      id: 2,
+      title: t('foodDonation'),
+      description: "Community food distribution for underprivileged families",
+      date: "2024-12-20",
+      time: "10:00 AM",
+      location: "City Palace Area",
+      attendees: 200,
+      image: "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&h=600&fit=crop",
+      category: "Social",
+      status: "upcoming"
     },
     {
-      title: 'Weekly Cycling Marathon / साप्ताहिक साइकिलिंग मैराथन',
-      date: 'Sunday, June 16, 2025',
-      time: '6:00 AM - 9:00 AM',
-      location: 'City Palace to Ambrai Ghat / सिटी पैलेस से अंबराई घाट',
-      participants: 156,
-      description: 'Cycle through the beautiful streets of Udaipur while promoting eco-friendly transportation. Prizes for top performers! / पर्यावरण-अनुकूल परिवहन को बढ़ावा देते हुए उदयपुर की खूबसूरत सड़कों पर साइकिल चलाएं।',
-      type: 'cycling' as const
-    },
-    {
-      title: 'Lake Pichola Cleanup / पिछोला झील सफाई',
-      date: 'Sunday, June 16, 2025',
-      time: '8:00 AM - 11:00 AM',
-      location: 'Lake Pichola Ghats / पिछोला झील घाट',
-      participants: 92,
-      description: 'Help us maintain the beauty of Lake Pichola by participating in our cleanup drive. Breakfast provided for all volunteers. / पिछोला झील की सुंदरता बनाए रखने में हमारी मदद करें।',
-      type: 'cleanup' as const
-    },
-    {
-      title: 'Sunday Food Distribution Drive / रविवार भोजन वितरण',
-      date: 'Sunday, June 23, 2025',
-      time: '12:00 PM - 4:00 PM',
-      location: 'Sukhadia Circle / सुखाड़िया सर्कल',
-      participants: 89,
-      description: 'Weekly food distribution drive to help feed the hungry. Volunteers needed for cooking, packaging, and distribution. / भूखों को खिलाने के लिए साप्ताहिक भोजन वितरण।',
-      type: 'cleanup' as const
-    },
-    {
-      title: 'Urban Forest Creation / शहरी वन निर्माण',
-      date: 'Sunday, June 23, 2025',
-      time: '7:30 AM - 10:30 AM',
-      location: 'Udaipur Green Belt / उदयपुर ग्रीन बेल्ट',
-      participants: 67,
-      description: 'Large-scale plantation drive to create an urban forest in Udaipur. Plant trees and watch them grow into a beautiful green space. / उदयपुर में शहरी वन बनाने के लिए बड़े पैमाने पर वृक्षारोपण।',
-      type: 'plantation' as const
+      id: 3,
+      title: "Lake Cleaning Drive",
+      description: "Volunteer to clean and preserve our beautiful lakes",
+      date: "2024-12-25",
+      time: "06:00 AM",
+      location: "Pichola Lake",
+      attendees: 120,
+      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=600&fit=crop",
+      category: t('environment'),
+      status: "upcoming"
     }
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-foreground mb-4">
-              आगामी <span className="text-gradient">पर्यावरण कार्यक्रम</span>
-              <br />
-              <span className="text-2xl">Upcoming Environmental Events</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              हमारे साप्ताहिक पर्यावरण गतिविधियों में शामिल हों और उदयपुर में वास्तविक बदलाव लाएं।
-              <br />
-              <span className="text-lg">Join our weekly environmental activities and make a real difference in Udaipur.</span>
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {upcomingEvents.map((event, index) => (
-              <EventCard key={index} {...event} />
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-              <h3 className="text-2xl font-semibold text-foreground mb-4">
-                अपना कार्यक्रम आयोजित करना चाहते हैं?
-                <br />
-                <span className="text-lg text-muted-foreground">Want to Organize Your Own Event?</span>
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                क्या आपके पास कोई सामुदायिक पर्यावरण कार्यक्रम या भोजन दान अभियान का विचार है? हम आपका समर्थन करना चाहेंगे!
-                <br />
-                <span className="text-sm">Have an idea for a community environmental event or food donation drive? We'd love to support you!</span>
-              </p>
-              <button className="gradient-nature text-white px-8 py-3 rounded-lg hover:opacity-90 transition-opacity">
-                कार्यक्रम प्रस्तावित करें / Propose an Event
-              </button>
-            </div>
-          </div>
-        </div>
+      
+      {/* Language Toggle */}
+      <div className="absolute top-4 right-4 z-30">
+        <LanguageToggle />
       </div>
+
+      {/* Hero Section */}
+      <section className="relative py-24 bg-gradient-to-br from-green-900 via-emerald-900 to-teal-900 text-white overflow-hidden">
+        <div className="absolute inset-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-40"
+          >
+            <source src="https://player.vimeo.com/external/394079206.sd.mp4?s=5ed9628c5b3afd19f7ae80ea3e0b6b88b52f8c95&profile_id=164&oauth2_token_id=57447761" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-br from-green-900/80 to-emerald-900/80"></div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-green-300 to-emerald-300 bg-clip-text text-transparent">
+            {t('upcomingEvents')}
+          </h1>
+          <p className="text-2xl text-green-100 max-w-3xl mx-auto leading-relaxed">
+            {t('upcomingEventsDesc')}
+          </p>
+        </div>
+      </section>
+
+      {/* Events Grid */}
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {events.map((event) => (
+            <Card key={event.id} className="overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 group border-2 border-green-200 bg-white/95 backdrop-blur-sm">
+              <div className="relative">
+                <img 
+                  src={event.image} 
+                  alt={event.title}
+                  className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute top-4 left-4">
+                  <Badge className="bg-green-600 text-white">
+                    {event.category}
+                  </Badge>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+              
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl font-bold text-green-800 group-hover:text-green-600 transition-colors">
+                  {event.title}
+                </CardTitle>
+                <p className="text-gray-600 leading-relaxed">
+                  {event.description}
+                </p>
+              </CardHeader>
+              
+              <CardContent className="space-y-4">
+                <div className="flex items-center gap-2 text-gray-600">
+                  <Calendar className="w-4 h-4" />
+                  <span>{new Date(event.date).toLocaleDateString()}</span>
+                </div>
+                
+                <div className="flex items-center gap-2 text-gray-600">
+                  <Clock className="w-4 h-4" />
+                  <span>{event.time}</span>
+                </div>
+                
+                <div className="flex items-center gap-2 text-gray-600">
+                  <MapPin className="w-4 h-4" />
+                  <span>{event.location}</span>
+                </div>
+                
+                <div className="flex items-center gap-2 text-gray-600">
+                  <Users className="w-4 h-4" />
+                  <span>{event.attendees} {t('joinEvent')}</span>
+                </div>
+                
+                <Button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-3 mt-6 group-hover:scale-105 transition-all duration-300">
+                  {t('joinEvent')}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

@@ -1,7 +1,8 @@
-
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Statistics from "@/components/Statistics";
+import CommunityForm from "@/components/CommunityForm";
+import CityVotingButton from "@/components/CityVotingButton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, Calendar, Users, ArrowRight, Play, Heart, Vote } from "lucide-react";
@@ -194,6 +195,40 @@ const Index = () => {
             <Button size="lg" variant="outline" className="border-3 border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-10 py-4 text-lg">
               {t('viewAllEvents')}
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Community Join Section */}
+      <section className="py-24 bg-gradient-to-br from-blue-50 to-green-50 dark:from-blue-950 dark:to-green-950 relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-30">
+          <img 
+            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&h=1080&fit=crop" 
+            alt="Community Background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/90 to-green-50/90 dark:from-blue-950/90 dark:to-green-950/90"></div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="text-center lg:text-left">
+              <h2 className="text-5xl font-bold text-foreground mb-8">
+                {t('joinCommunity')}
+              </h2>
+              <p className="text-2xl text-muted-foreground mb-12 leading-relaxed">
+                {t('joinCommunityDesc')}
+              </p>
+              
+              {/* City Voting Button */}
+              <div className="mb-8">
+                <CityVotingButton />
+              </div>
+            </div>
+            
+            <div className="flex justify-center">
+              <CommunityForm />
+            </div>
           </div>
         </div>
       </section>
