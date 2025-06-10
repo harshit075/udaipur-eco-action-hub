@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import LanguageToggle from '@/components/LanguageToggle';
 import { Menu, X, TreePine, Users, Calendar, BarChart3, Vote } from 'lucide-react';
 
 const Navbar = () => {
@@ -40,6 +41,7 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+            <LanguageToggle />
             <ThemeToggle />
             <Button className="gradient-nature text-white hover:opacity-90 transition-opacity">
               Join Community
@@ -48,6 +50,7 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
+            <LanguageToggle />
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}

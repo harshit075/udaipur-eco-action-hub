@@ -5,8 +5,11 @@ import Statistics from "@/components/Statistics";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, Calendar, Users, ArrowRight, Play, Heart, Vote } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Index = () => {
+  const { t } = useLanguage();
+
   const upcomingEvents = [
     {
       title: 'Tree Plantation Drive',
@@ -24,16 +27,18 @@ const Index = () => {
 
   const successStories = [
     {
-      title: 'Lake Restoration Success',
-      description: 'How we cleaned Pichola Lake with community effort',
+      title: t('lakeRestoration'),
+      description: t('lakeRestorationDesc'),
       image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=600&fit=crop',
-      impact: '2,000 kg waste removed'
+      impact: `2,000 ${t('wasteRemoved')}`,
+      video: 'https://player.vimeo.com/external/394079206.sd.mp4?s=5ed9628c5b3afd19f7ae80ea3e0b6b88b52f8c95&profile_id=164&oauth2_token_id=57447761'
     },
     {
-      title: 'Urban Forest Creation',
-      description: 'Creating green spaces in the heart of Udaipur',
+      title: t('urbanForest'),
+      description: t('urbanForestDesc'),
       image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=600&fit=crop',
-      impact: '1,500 trees planted'
+      impact: `1,500 ${t('treesPlantedCount')}`,
+      video: 'https://player.vimeo.com/external/394079206.sd.mp4?s=5ed9628c5b3afd19f7ae80ea3e0b6b88b52f8c95&profile_id=164&oauth2_token_id=57447761'
     }
   ];
 
@@ -42,14 +47,26 @@ const Index = () => {
       <Navbar />
       <Hero />
       
-      {/* Interactive Statistics Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-green-50 dark:from-gray-900 dark:to-green-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
+      {/* Enhanced Statistics Section with Background Video */}
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-20"
+          >
+            <source src="https://player.vimeo.com/external/394079206.sd.mp4?s=5ed9628c5b3afd19f7ae80ea3e0b6b88b52f8c95&profile_id=164&oauth2_token_id=57447761" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50/95 to-green-50/95 dark:from-gray-900/95 dark:to-green-950/95"></div>
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold text-foreground mb-6">
               Real Impact, Real Numbers
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-2xl text-muted-foreground">
               See how our community is making a difference every day
             </p>
           </div>
@@ -57,37 +74,57 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Video Stories Section */}
-      <section className="py-20 bg-white dark:bg-gray-900">
+      {/* Enhanced Video Stories Section */}
+      <section className="py-24 bg-gradient-to-br from-gray-900 to-green-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
-              Success Stories
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold mb-6">
+              {t('successStories')}
             </h2>
-            <p className="text-xl text-muted-foreground">
-              Watch how we're transforming Udaipur together
+            <p className="text-2xl text-gray-200">
+              {t('successStoriesDesc')}
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {successStories.map((story, index) => (
               <div key={index} className="group cursor-pointer">
-                <div className="relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
-                  <img 
-                    src={story.image} 
-                    alt={story.title}
-                    className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <Play className="w-8 h-8 text-white ml-1" />
+                <div className="relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105">
+                  {/* Background Video */}
+                  <div className="absolute inset-0 z-0">
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                    >
+                      <source src={story.video} type="video/mp4" />
+                    </video>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                  </div>
+                  
+                  {/* Foreground Image Overlay */}
+                  <div className="relative z-10">
+                    <img 
+                      src={story.image} 
+                      alt={story.title}
+                      className="w-full h-96 object-cover transition-transform duration-1000 group-hover:scale-110 mix-blend-overlay opacity-60"
+                    />
+                  </div>
+                  
+                  {/* Play Button */}
+                  <div className="absolute inset-0 z-20 flex items-center justify-center">
+                    <div className="w-24 h-24 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-125 transition-transform duration-500 border-2 border-white/30">
+                      <Play className="w-12 h-12 text-white ml-2" />
                     </div>
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-8">
-                    <h3 className="text-2xl font-bold text-white mb-2">{story.title}</h3>
-                    <p className="text-gray-200 mb-4">{story.description}</p>
-                    <div className="bg-green-600 text-white px-4 py-2 rounded-full text-sm w-fit">
+                  
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 z-20 p-10">
+                    <h3 className="text-3xl font-bold text-white mb-3">{story.title}</h3>
+                    <p className="text-gray-200 mb-6 text-lg">{story.description}</p>
+                    <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-full text-lg font-semibold w-fit">
                       {story.impact}
                     </div>
                   </div>
@@ -98,46 +135,55 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Interactive Events Section */}
-      <section className="py-20 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
-              Upcoming Events
+      {/* Enhanced Events Section */}
+      <section className="py-24 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-30">
+          <img 
+            src="https://images.unsplash.com/photo-1574263867128-a3d5c1b1dedc?w=1920&h=1080&fit=crop" 
+            alt="Background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-green-50/90 to-emerald-50/90 dark:from-green-950/90 dark:to-emerald-950/90"></div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold text-foreground mb-6">
+              {t('upcomingEvents')}
             </h2>
-            <p className="text-xl text-muted-foreground">
-              Join our next environmental activities
+            <p className="text-2xl text-muted-foreground">
+              {t('upcomingEventsDesc')}
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
             {upcomingEvents.map((event, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+              <Card key={index} className="overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 group border-2 border-white/50 backdrop-blur-sm bg-white/80">
                 <div className="relative">
                   <img 
                     src={event.image} 
                     alt={event.title}
-                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <h3 className="text-xl font-bold">{event.title}</h3>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                  <div className="absolute bottom-6 left-6 text-white">
+                    <h3 className="text-2xl font-bold">{event.title}</h3>
                   </div>
                 </div>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4 text-muted-foreground mb-4">
+                <CardContent className="p-8">
+                  <div className="flex items-center gap-6 text-muted-foreground mb-6">
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>{event.date}</span>
+                      <Calendar className="w-5 h-5" />
+                      <span className="text-lg">{event.date}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4" />
-                      <span>{event.location}</span>
+                      <MapPin className="w-5 h-5" />
+                      <span className="text-lg">{event.location}</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white">
-                    Join Event
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                  <Button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-4 text-lg">
+                    {t('joinEvent')}
+                    <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </CardContent>
               </Card>
@@ -145,44 +191,56 @@ const Index = () => {
           </div>
           
           <div className="text-center">
-            <Button size="lg" variant="outline" className="border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-8 py-3">
-              View All Events
+            <Button size="lg" variant="outline" className="border-3 border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-10 py-4 text-lg">
+              {t('viewAllEvents')}
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-20 bg-gradient-to-r from-green-900 to-emerald-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Ready to Make Udaipur Greener?
+      {/* Enhanced Call to Action Section */}
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="https://player.vimeo.com/external/394079206.sd.mp4?s=5ed9628c5b3afd19f7ae80ea3e0b6b88b52f8c95&profile_id=164&oauth2_token_id=57447761" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-r from-green-900/90 to-emerald-900/90"></div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+          <h2 className="text-5xl font-bold mb-8">
+            {t('makeUdaipurGreener')}
           </h2>
-          <p className="text-xl mb-12 max-w-3xl mx-auto text-green-100">
-            Every action counts. Whether it's planting a tree, donating food, or voting on community projects, 
-            your contribution helps build a sustainable future for Udaipur.
+          <p className="text-2xl mb-16 max-w-4xl mx-auto text-green-100 leading-relaxed">
+            {t('finalCtaDesc')}
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/20 transition-all duration-300">
-              <Heart className="w-12 h-12 text-green-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-4">Make a Donation</h3>
-              <p className="text-green-100 mb-6">
-                Donate seeds, e-waste, or food to support our community initiatives
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+            <div className="bg-white/15 backdrop-blur-lg rounded-3xl p-12 hover:bg-white/25 transition-all duration-500 border-2 border-white/20">
+              <Heart className="w-16 h-16 text-green-400 mx-auto mb-6" />
+              <h3 className="text-2xl font-bold mb-6">{t('makeDonation')}</h3>
+              <p className="text-green-100 mb-8 text-lg leading-relaxed">
+                {t('donationDesc')}
               </p>
-              <Button className="bg-white text-green-900 hover:bg-gray-100 w-full">
-                Donate Now
+              <Button className="bg-white text-green-900 hover:bg-gray-100 w-full py-4 text-lg font-semibold">
+                {t('donateButton')}
               </Button>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 hover:bg-white/20 transition-all duration-300">
-              <Vote className="w-12 h-12 text-green-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-4">Community Voting</h3>
-              <p className="text-green-100 mb-6">
-                Have your say in city development projects and community decisions
+            <div className="bg-white/15 backdrop-blur-lg rounded-3xl p-12 hover:bg-white/25 transition-all duration-500 border-2 border-white/20">
+              <Vote className="w-16 h-16 text-green-400 mx-auto mb-6" />
+              <h3 className="text-2xl font-bold mb-6">{t('communityVotingCta')}</h3>
+              <p className="text-green-100 mb-8 text-lg leading-relaxed">
+                {t('votingDesc')}
               </p>
-              <Button className="bg-white text-green-900 hover:bg-gray-100 w-full">
-                Vote Now
+              <Button className="bg-white text-green-900 hover:bg-gray-100 w-full py-4 text-lg font-semibold">
+                {t('voteNow')}
               </Button>
             </div>
           </div>
