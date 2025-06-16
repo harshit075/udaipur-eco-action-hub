@@ -1,3 +1,4 @@
+
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Statistics from "@/components/Statistics";
@@ -7,16 +8,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, Calendar, Users, ArrowRight, Play, Heart, Vote } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const upcomingEvents = [
     {
       title: 'Tree Plantation Drive',
       date: 'June 15, 2025',
       location: 'Fateh Sagar Lake',
-      image: 'https://images.unsplash.com/photo-1574263867128-a3d5c1b1dedc?w=600&h=400&fit=crop'
+      image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop'
     },
     {
       title: 'Community Food Drive',
@@ -40,6 +43,63 @@ const Index = () => {
       image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=600&fit=crop',
       impact: `1,500 ${t('treesPlantedCount')}`,
       video: 'https://player.vimeo.com/external/394079206.sd.mp4?s=5ed9628c5b3afd19f7ae80ea3e0b6b88b52f8c95&profile_id=164&oauth2_token_id=57447761'
+    }
+  ];
+
+  const handleWatchStory = () => {
+    window.open('https://player.vimeo.com/external/394079206.sd.mp4?s=5ed9628c5b3afd19f7ae80ea3e0b6b88b52f8c95&profile_id=164&oauth2_token_id=57447761', '_blank');
+  };
+
+  const handleDonate = () => {
+    navigate('/donate');
+  };
+
+  const handleStartJourney = () => {
+    navigate('/events');
+  };
+
+  const handleJoinEvent = () => {
+    navigate('/events');
+  };
+
+  const handleLearnMore = (type: string) => {
+    switch(type) {
+      case 'food':
+        alert('Food Donation: Join our community food drives to help feed underprivileged families. We organize regular food distribution events across Udaipur, providing nutritious meals to those in need.');
+        break;
+      case 'voting':
+        alert('Community Voting: Participate in democratic decision-making for city development projects. Vote on environmental initiatives, infrastructure improvements, and community welfare programs.');
+        break;
+      case 'tree':
+        alert('Tree Plantation: Help us make Udaipur greener by planting trees across the city. Our plantation drives focus on native species that improve air quality and provide natural shade.');
+        break;
+    }
+  };
+
+  const features = [
+    {
+      title: t('foodDonation'),
+      description: t('foodDonationDesc'),
+      icon: Heart,
+      image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&h=600&fit=crop',
+      link: '/donate',
+      type: 'food'
+    },
+    {
+      title: t('communityVoting'),
+      description: t('communityVotingDesc'),
+      icon: Vote,
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop',
+      link: '/community-voting',
+      type: 'voting'
+    },
+    {
+      title: t('treePlantation'),
+      description: t('treePlantationDesc'),
+      icon: Vote,
+      image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=600&fit=crop',
+      link: '/events',
+      type: 'tree'
     }
   ];
 
@@ -75,6 +135,51 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Features Section with Learn More */}
+      <section className="py-24 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold text-foreground mb-6">
+              How You Can Help
+            </h2>
+            <p className="text-2xl text-muted-foreground">
+              Choose your way to make a difference in Udaipur
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {features.map((feature, index) => (
+              <div key={index} className="group relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform">
+                <div className="absolute inset-0">
+                  <img 
+                    src={feature.image} 
+                    alt={feature.title}
+                    className="w-full h-96 object-cover transition-transform duration-1000 group-hover:scale-125"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
+                </div>
+                <div className="relative z-10 p-10 h-96 flex flex-col justify-end">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <feature.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-3xl font-bold text-white mb-3">{feature.title}</h3>
+                    <p className="text-gray-200 mb-6 text-lg">{feature.description}</p>
+                  </div>
+                  <Button 
+                    onClick={() => handleLearnMore(feature.type)}
+                    className="bg-white/20 hover:bg-green-500 text-white border-2 border-white/30 hover:border-green-500 rounded-full backdrop-blur-sm w-fit group-hover:scale-105 transition-all duration-300"
+                  >
+                    {t('learnMore')}
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Enhanced Video Stories Section */}
       <section className="py-24 bg-gradient-to-br from-gray-900 to-green-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,6 +190,13 @@ const Index = () => {
             <p className="text-2xl text-gray-200">
               {t('successStoriesDesc')}
             </p>
+            <Button 
+              onClick={handleWatchStory}
+              className="mt-8 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-8 py-4 text-lg rounded-full"
+            >
+              <Play className="w-6 h-6 mr-3" />
+              Watch Our Story
+            </Button>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -182,7 +294,10 @@ const Index = () => {
                       <span className="text-lg">{event.location}</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-4 text-lg">
+                  <Button 
+                    onClick={handleJoinEvent}
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-4 text-lg"
+                  >
                     {t('joinEvent')}
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
@@ -192,7 +307,12 @@ const Index = () => {
           </div>
           
           <div className="text-center">
-            <Button size="lg" variant="outline" className="border-3 border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-10 py-4 text-lg">
+            <Button 
+              onClick={() => navigate('/events')}
+              size="lg" 
+              variant="outline" 
+              className="border-3 border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-10 py-4 text-lg"
+            >
               {t('viewAllEvents')}
             </Button>
           </div>
@@ -263,7 +383,10 @@ const Index = () => {
               <p className="text-green-100 mb-8 text-lg leading-relaxed">
                 {t('donationDesc')}
               </p>
-              <Button className="bg-white text-green-900 hover:bg-gray-100 w-full py-4 text-lg font-semibold">
+              <Button 
+                onClick={handleDonate}
+                className="bg-white text-green-900 hover:bg-gray-100 w-full py-4 text-lg font-semibold"
+              >
                 {t('donateButton')}
               </Button>
             </div>
@@ -274,10 +397,22 @@ const Index = () => {
               <p className="text-green-100 mb-8 text-lg leading-relaxed">
                 {t('votingDesc')}
               </p>
-              <Button className="bg-white text-green-900 hover:bg-gray-100 w-full py-4 text-lg font-semibold">
+              <Button 
+                onClick={() => navigate('/community-voting')}
+                className="bg-white text-green-900 hover:bg-gray-100 w-full py-4 text-lg font-semibold"
+              >
                 {t('voteNow')}
               </Button>
             </div>
+          </div>
+          
+          <div className="mt-16">
+            <Button 
+              onClick={handleStartJourney}
+              className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white px-12 py-4 text-xl rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-white/20"
+            >
+              Start Your Journey
+            </Button>
           </div>
         </div>
       </section>

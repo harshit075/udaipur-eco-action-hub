@@ -4,12 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Vote, Users, Calendar, MapPin, TreePine, Droplets, Recycle } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Vote, Users, Calendar, MapPin, TreePine, Droplets, Recycle, Building, Lightbulb, Wind } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageToggle from "@/components/LanguageToggle";
+import VotingForm from "@/components/VotingForm";
+import { useState } from "react";
 
 const CommunityVoting = () => {
   const { t } = useLanguage();
+  const [selectedProject, setSelectedProject] = useState<any>(null);
 
   const projects = [
     {
@@ -37,7 +41,7 @@ const CommunityVoting = () => {
       budget: "₹25,00,000",
       location: "Sector 4-7",
       deadline: "2025-02-01",
-      image: "https://images.unsplash.com/photo-1574263867128-a3d5c1b1dedc?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=600&fit=crop",
       status: "active"
     },
     {
@@ -53,13 +57,50 @@ const CommunityVoting = () => {
       deadline: "2025-01-30",
       image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=600&fit=crop",
       status: "active"
+    },
+    {
+      id: 4,
+      title: "Solar Street Lighting Project",
+      description: "Replace traditional street lights with solar-powered LED systems",
+      category: "Renewable Energy",
+      icon: Lightbulb,
+      votes: 1100,
+      totalVotes: 2000,
+      budget: "₹20,00,000",
+      location: "Old City Area",
+      deadline: "2025-02-15",
+      image: "https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=800&h=600&fit=crop",
+      status: "active"
+    },
+    {
+      id: 5,
+      title: "Digital Healthcare Kiosks",
+      description: "Set up AI-powered health screening kiosks in public areas",
+      category: "Healthcare",
+      icon: Building,
+      votes: 890,
+      totalVotes: 2000,
+      budget: "₹18,00,000",
+      location: "Public Markets",
+      deadline: "2025-03-01",
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop",
+      status: "active"
+    },
+    {
+      id: 6,
+      title: "Wind Energy Pilot Program",
+      description: "Install small wind turbines for renewable energy generation",
+      category: "Renewable Energy",
+      icon: Wind,
+      votes: 675,
+      totalVotes: 2000,
+      budget: "₹35,00,000",
+      location: "Hilltop Areas",
+      deadline: "2025-04-01",
+      image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&h=600&fit=crop",
+      status: "active"
     }
   ];
-
-  const handleVote = (projectId: number) => {
-    console.log(`Voting for project ${projectId}`);
-    // Here you would typically send the vote to your backend
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -168,13 +209,25 @@ const CommunityVoting = () => {
                   <div className="text-sm text-gray-500">Estimated Budget</div>
                 </div>
                 
-                <Button 
-                  onClick={() => handleVote(project.id)}
-                  className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white py-3 group-hover:scale-105 transition-all duration-300"
-                >
-                  <Vote className="w-4 h-4 mr-2" />
-                  {t('voteNow')}
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button 
+                      onClick={() => setSelectedProject(project)}
+                      className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white py-3 group-hover:scale-105 transition-all duration-300"
+                    >
+                      <Vote className="w-4 h-4 mr-2" />
+                      {t('voteNow')}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    {selectedProject && (
+                      <VotingForm
+                        projectId={selectedProject.id}
+                        projectTitle={selectedProject.title}
+                      />
+                    )}
+                  </DialogContent>
+                </Dialog>
               </CardContent>
             </Card>
           ))}

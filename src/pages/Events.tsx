@@ -2,13 +2,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Calendar, MapPin, Users, Clock, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import JoinEventForm from "@/components/JoinEventForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageToggle from "@/components/LanguageToggle";
+import { useState } from "react";
 
 const Events = () => {
   const { t } = useLanguage();
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
   const events = [
     {
@@ -19,7 +23,7 @@ const Events = () => {
       time: "08:00 AM",
       location: "Fateh Sagar Lake",
       attendees: 150,
-      image: "https://images.unsplash.com/photo-1574263867128-a3d5c1b1dedc?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=600&fit=crop",
       category: t('environment'),
       status: "upcoming"
     },
@@ -129,13 +133,29 @@ const Events = () => {
                 
                 <div className="flex items-center gap-2 text-gray-600">
                   <Users className="w-4 h-4" />
-                  <span>{event.attendees} {t('joinEvent')}</span>
+                  <span>{event.attendees} attendees</span>
                 </div>
                 
-                <Button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-3 mt-6 group-hover:scale-105 transition-all duration-300">
-                  {t('joinEvent')}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button 
+                      onClick={() => setSelectedEvent(event)}
+                      className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-3 mt-6 group-hover:scale-105 transition-all duration-300"
+                    >
+                      {t('joinEvent')}
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    {selectedEvent && (
+                      <JoinEventForm
+                        eventTitle={selectedEvent.title}
+                        eventDate={selectedEvent.date}
+                        eventLocation={selectedEvent.location}
+                      />
+                    )}
+                  </DialogContent>
+                </Dialog>
               </CardContent>
             </Card>
           ))}

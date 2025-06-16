@@ -3,7 +3,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import Statistics from './Statistics';
-import { MapPin, Calendar, Users, Target, Award, Trophy } from 'lucide-react';
+import { MapPin, Calendar, Users, Target, Award, Trophy, TrendingUp, BarChart3 } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 
 const PublicDashboard = () => {
   const monthlyGoals = [
@@ -44,10 +45,34 @@ const PublicDashboard = () => {
     { ward: 'Ward 4 - Surajpole', trees: 267, cleanups: 5, volunteers: 134, rank: 2 }
   ];
 
+  // Sample data for charts
+  const monthlyData = [
+    { month: 'Jul', trees: 180, volunteers: 45, cleanups: 8 },
+    { month: 'Aug', trees: 250, volunteers: 62, cleanups: 12 },
+    { month: 'Sep', trees: 320, volunteers: 78, cleanups: 15 },
+    { month: 'Oct', trees: 280, volunteers: 89, cleanups: 18 },
+    { month: 'Nov', trees: 400, volunteers: 95, cleanups: 22 },
+    { month: 'Dec', trees: 342, volunteers: 120, cleanups: 25 }
+  ];
+
+  const categoryData = [
+    { name: 'Tree Plantation', value: 45, color: '#10B981' },
+    { name: 'Waste Management', value: 30, color: '#3B82F6' },
+    { name: 'Water Conservation', value: 15, color: '#06B6D4' },
+    { name: 'Community Events', value: 10, color: '#8B5CF6' }
+  ];
+
+  const impactMetrics = [
+    { title: 'CO2 Absorbed', value: '1,250', unit: 'tons', icon: TrendingUp, color: 'text-green-600' },
+    { title: 'Water Saved', value: '50,000', unit: 'liters', icon: BarChart3, color: 'text-blue-600' },
+    { title: 'Waste Recycled', value: '2,500', unit: 'kg', icon: Target, color: 'text-emerald-600' },
+    { title: 'Lives Impacted', value: '15,000', unit: 'people', icon: Users, color: 'text-purple-600' }
+  ];
+
   const getRankIcon = (rank: number) => {
-    if (rank === 1) return <Trophy className="w-4 h-4 text-emerald-500" />;
-    if (rank === 2) return <Award className="w-4 h-4 text-muted-foreground" />;
-    if (rank === 3) return <Award className="w-4 h-4 text-green-600" />;
+    if (rank === 1) return <Trophy className="w-4 h-4 text-yellow-500" />;
+    if (rank === 2) return <Award className="w-4 h-4 text-gray-400" />;
+    if (rank === 3) return <Award className="w-4 h-4 text-amber-600" />;
     return null;
   };
 
@@ -56,11 +81,33 @@ const PublicDashboard = () => {
       {/* Hero Section */}
       <div className="text-center space-y-6 slide-up">
         <h1 className="text-5xl font-bold text-foreground mb-4">
-          Udaipur <span className="text-gradient">Civic Impact</span> Dashboard
+          Udaipur <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Civic Impact</span> Dashboard
         </h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
           Real-time transparency into our collective environmental efforts. Every action counts towards a greener, cleaner Udaipur.
         </p>
+      </div>
+
+      {/* Impact Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {impactMetrics.map((metric, index) => (
+          <Card key={index} className="border-0 shadow-lg bg-gradient-to-br from-white to-gray-50/50 hover:shadow-xl transition-shadow">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground mb-1">{metric.title}</p>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-bold text-foreground">{metric.value}</span>
+                    <span className="text-sm text-muted-foreground">{metric.unit}</span>
+                  </div>
+                </div>
+                <div className={`w-12 h-12 rounded-full bg-gradient-to-br from-${metric.color.split('-')[1]}-100 to-${metric.color.split('-')[1]}-200 flex items-center justify-center`}>
+                  <metric.icon className={`w-6 h-6 ${metric.color}`} />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
       {/* Main Statistics */}
@@ -68,7 +115,66 @@ const PublicDashboard = () => {
         <Statistics />
       </div>
 
-      {/* Monthly Progress */}
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Monthly Progress Chart */}
+        <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-gray-50/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3 text-2xl">
+              <div className="p-2 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg">
+                <BarChart3 className="w-6 h-6 text-white" />
+              </div>
+              Monthly Progress
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={monthlyData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="trees" stroke="#10B981" strokeWidth={3} />
+                <Line type="monotone" dataKey="volunteers" stroke="#3B82F6" strokeWidth={3} />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Activity Distribution */}
+        <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-gray-50/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3 text-2xl">
+              <div className="p-2 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg">
+                <Target className="w-6 h-6 text-white" />
+              </div>
+              Activity Distribution
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={categoryData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={100}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                >
+                  {categoryData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Monthly Goals */}
       <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-gray-50/50 card-hover">
         <CardHeader className="pb-6">
           <CardTitle className="flex items-center gap-3 text-2xl">
@@ -81,15 +187,15 @@ const PublicDashboard = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {monthlyGoals.map((goal, index) => (
-              <div key={index} className="space-y-4 p-4 bg-white rounded-lg shadow-sm border">
+              <div key={index} className="space-y-4 p-6 bg-white rounded-xl shadow-md border hover:shadow-lg transition-shadow">
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold text-foreground">{goal.title}</span>
+                  <span className="font-semibold text-foreground text-lg">{goal.title}</span>
                   <span className="text-sm text-muted-foreground font-medium">
                     {goal.current.toLocaleString()} / {goal.target.toLocaleString()} {goal.unit}
                   </span>
                 </div>
                 <div className="space-y-2">
-                  <Progress value={(goal.current / goal.target) * 100} className="h-3" />
+                  <Progress value={(goal.current / goal.target) * 100} className="h-4" />
                   <div className="text-right text-sm font-medium text-primary">
                     {Math.round((goal.current / goal.target) * 100)}% Complete
                   </div>
@@ -97,6 +203,30 @@ const PublicDashboard = () => {
               </div>
             ))}
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Ward Performance Chart */}
+      <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-gray-50/50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-3 text-2xl">
+            <div className="p-2 bg-gradient-to-br from-purple-500 to-violet-600 rounded-lg">
+              <BarChart3 className="w-6 h-6 text-white" />
+            </div>
+            Ward Performance Comparison
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={wardPerformance}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="ward" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="trees" fill="#10B981" />
+              <Bar dataKey="volunteers" fill="#3B82F6" />
+            </BarChart>
+          </ResponsiveContainer>
         </CardContent>
       </Card>
 
@@ -113,7 +243,7 @@ const PublicDashboard = () => {
         <CardContent>
           <div className="space-y-4">
             {recentActivities.map((activity, index) => (
-              <div key={index} className="flex items-center justify-between p-6 bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow">
+              <div key={index} className="flex items-center justify-between p-6 bg-white rounded-xl shadow-md border hover:shadow-lg transition-shadow">
                 <div className="space-y-2">
                   <h4 className="font-semibold text-foreground text-lg">{activity.title}</h4>
                   <p className="text-sm text-muted-foreground">{activity.date}</p>
@@ -131,7 +261,7 @@ const PublicDashboard = () => {
         </CardContent>
       </Card>
 
-      {/* Ward-wise Performance */}
+      {/* Ward-wise Performance Leaderboard */}
       <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-gray-50/50 card-hover">
         <CardHeader className="pb-6">
           <CardTitle className="flex items-center gap-3 text-2xl">
