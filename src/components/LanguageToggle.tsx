@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -12,10 +11,10 @@ const LanguageToggle = () => {
       variant="outline"
       size="sm"
       onClick={toggleLanguage}
-      className="flex items-center gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm"
+      className="flex items-center gap-2"
     >
       <Languages className="w-4 h-4" />
-      {language === 'en' ? 'हिंदी' : 'English'}
+      {language === 'en' ? 'हिं' : 'En'}
     </Button>
   );
 };

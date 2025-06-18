@@ -3,7 +3,6 @@ import React, { Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 import { TreePine, Bike, Users, Heart, Vote, Play, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageToggle from './LanguageToggle';
 
 // Lazy load the 3D scene to prevent initial loading issues
 const Scene3D = React.lazy(() => import('./Scene3D'));
@@ -22,21 +21,21 @@ const Hero = () => {
       title: t('foodDonation'),
       description: t('foodDonationDesc'),
       icon: Heart,
-      image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&h=600&fit=crop',
+      image: '../src/images/FoodDonation.jpg',
       link: '/donate'
     },
     {
       title: t('communityVoting'),
       description: t('communityVotingDesc'),
       icon: Vote,
-      image: 'https://images.unsplash.com/photo-1541560052-77e59dd2f2ad?w=800&h=600&fit=crop',
+      image: '../src/images/votting.jpg',
       link: '/community-voting'
     },
     {
       title: t('treePlantation'),
       description: t('treePlantationDesc'),
       icon: TreePine,
-      image: 'https://images.unsplash.com/photo-1574263867128-a3d5c1b1dedc?w=800&h=600&fit=crop',
+      image: '../src/images/TreePlanting.jpg',
       link: '/events'
     }
   ];
@@ -45,7 +44,7 @@ const Hero = () => {
     <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900 overflow-hidden">
       {/* Language Toggle */}
       <div className="absolute top-4 right-4 z-30">
-        <LanguageToggle />
+       
       </div>
 
       {/* Enhanced Background Video */}
