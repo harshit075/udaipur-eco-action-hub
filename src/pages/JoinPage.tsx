@@ -16,9 +16,10 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth, db } from "@/lib/firebase"
 import { useNavigate, useLocation } from "react-router-dom"
 import { doc, setDoc } from 'firebase/firestore'
-import { useState } from 'react'
+import { useState, useEffect } from 'react' // <--- Import useEffect
 import { toast } from 'sonner'
 import Navbar from "@/components/Navbar"
+import { useAuth } from "@/contexts/AuthContext" // <--- Import useAuth
 
 const signUpSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -38,10 +39,25 @@ const JoinPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const from = location.state?.from?.pathname || "/dashboard";
+  const from = location.state?.from?.pathname || "/"; // Redirect to home or dashboard after login
+
+  // --- GET THE CURRENT USER STATUS ---
+  const { currentUser, loading: authLoading } = useAuth();
 
   const signUpForm = useForm<SignUpFormValues>({ resolver: zodResolver(signUpSchema) });
   const loginForm = useForm<LoginFormValues>({ resolver: zodResolver(loginSchema) });
+
+  // --- THIS IS THE KEY TO THE FIX ---
+  // This effect runs whenever the user's auth status changes.
+  useEffect(() => {
+    // If the authentication check is still loading, do nothing yet.
+    if (authLoading) return;
+    
+    // If auth check is done AND there's a logged-in user, redirect them away.
+    if (currentUser) {
+      navigate(from, { replace: true });
+    }
+  }, [currentUser, authLoading, navigate, from]);
 
   const onSignUp = async (data: SignUpFormValues) => {
     setIsLoading(true);
@@ -60,15 +76,15 @@ const JoinPage = () => {
       });
       
       toast.success(`Welcome, ${data.name}!`, { description: "Your account has been created." });
-      navigate(from, { replace: true });
+      // We no longer need to navigate here; the useEffect will handle it.
     } catch (error: any) {
       const message = error.code === 'auth/email-already-in-use' 
         ? 'This email is already in use.' 
         : 'Failed to create account.';
       toast.error(message, { description: error.message });
-    } finally {
-      setIsLoading(false);
-    }
+      setIsLoading(false); // Only set loading to false on error
+    } 
+    // No finally block needed, as success is handled by useEffect navigation.
   };
 
   const onLogin = async (data: LoginFormValues) => {
@@ -76,13 +92,23 @@ const JoinPage = () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       toast.success("Welcome back!", { description: "You are now logged in." });
-      navigate(from, { replace: true });
+      // We no longer need to navigate here; the useEffect will handle it.
     } catch (error: any) {
       toast.error("Login Failed", { description: "Please check your email and password." });
-    } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Only set loading to false on error
     }
+    // No finally block needed, as success is handled by useEffect navigation.
   };
+  
+  // Don't render the form at all if the auth status is loading or if the user is already logged in
+  // This prevents any flash of the form. A simple spinner is better.
+  if (authLoading || currentUser) {
+     return (
+        <div className="flex justify-center items-center min-h-screen bg-background">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary"></div>
+        </div>
+      );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -113,19 +139,16 @@ const JoinPage = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={signUpForm.handleSubmit(onSignUp)} className="space-y-4">
-                    {/* Name */}
                     <div className="space-y-2">
                       <Label htmlFor="name">Full Name</Label>
                       <Input id="name" placeholder="Your Name" {...signUpForm.register("name")} />
                       {signUpForm.formState.errors.name && <p className="text-red-500 text-xs">{signUpForm.formState.errors.name.message}</p>}
                     </div>
-                    {/* Email */}
                     <div className="space-y-2">
                       <Label htmlFor="email-signup">Email Address</Label>
                       <Input id="email-signup" type="email" placeholder="you@example.com" {...signUpForm.register("email")} />
                       {signUpForm.formState.errors.email && <p className="text-red-500 text-xs">{signUpForm.formState.errors.email.message}</p>}
                     </div>
-                    {/* Password */}
                     <div className="space-y-2">
                       <Label htmlFor="password-signup">Password</Label>
                       <Input id="password-signup" type="password" placeholder="••••••••" {...signUpForm.register("password")} />
@@ -148,13 +171,11 @@ const JoinPage = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
-                     {/* Email */}
                      <div className="space-y-2">
                       <Label htmlFor="email-login">Email Address</Label>
                       <Input id="email-login" type="email" placeholder="you@example.com" {...loginForm.register("email")} />
                       {loginForm.formState.errors.email && <p className="text-red-500 text-xs">{loginForm.formState.errors.email.message}</p>}
                     </div>
-                     {/* Password */}
                     <div className="space-y-2">
                       <Label htmlFor="password-login">Password</Label>
                       <Input id="password-login" type="password" placeholder="••••••••" {...loginForm.register("password")} />
