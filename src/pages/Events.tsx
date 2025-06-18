@@ -23,7 +23,7 @@ const Events = () => {
       time: "08:00 AM",
       location: "Fateh Sagar Lake",
       attendees: 150,
-      image: "../src/images/TreePlanting.jpg",
+      image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=600&fit=crop",
       category: t('environment'),
       status: "upcoming"
     },
