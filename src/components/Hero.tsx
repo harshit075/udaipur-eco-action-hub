@@ -17,28 +17,29 @@ const Hero = () => {
   ];
 
   const features = [
-    {
-      title: t('foodDonation'),
-      description: t('foodDonationDesc'),
-      icon: Heart,
-      image: '../src/images/FoodDonation.jpg',
-      link: '/donate'
-    },
-    {
-      title: t('communityVoting'),
-      description: t('communityVotingDesc'),
-      icon: Vote,
-      image: '../src/images/votting.jpg',
-      link: '/community-voting'
-    },
-    {
-      title: t('treePlantation'),
-      description: t('treePlantationDesc'),
-      icon: TreePine,
-      image: '../src/images/TreePlanting.jpg',
-      link: '/events'
-    }
-  ];
+  {
+    title: t('foodDonation'),
+    description: t('foodDonationDesc'),
+    icon: Heart,
+    image: '/images/FoodDonation.jpg', // ✅ Corrected path
+    link: '/donate'
+  },
+  {
+    title: t('communityVoting'),
+    description: t('communityVotingDesc'),
+    icon: Vote,
+    image: '/images/votting.jpg', // ✅ Corrected path
+    link: '/community-voting'
+  },
+  {
+    title: t('treePlantation'),
+    description: t('treePlantationDesc'),
+    icon: TreePine,
+    image: '/images/TreePlanting.jpg', // ✅ Corrected path
+    link: '/events'
+  }
+];
+
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900 overflow-hidden">

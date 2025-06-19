@@ -14,7 +14,6 @@ import Donate from "./pages/Donate";
 import Dashboard from "./pages/Dashboard";
 import CommunityVoting from "./pages/CommunityVoting";
 import NotFound from "./pages/NotFound";
-import ProtectedRoute from './components/ProtectedRoute'; // This is needed again!
 import JoinPage from "./pages/JoinPage";
 
 const queryClient = new QueryClient();
@@ -33,34 +32,10 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/join" element={<JoinPage />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/donate" element={<Donate />} />
+                <Route path="/community-voting" element={<CommunityVoting />} />
                 <Route path="*" element={<NotFound />} />
-
-                {/* --- PROTECTED ROUTES --- */}
-                {/* Any user trying to access these will be redirected to /join if not logged in */}
-                <Route
-                  path="/events"
-                  element={
-                    <ProtectedRoute>
-                      <Events />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/donate"
-                  element={
-                    <ProtectedRoute>
-                      <Donate />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/community-voting"
-                  element={
-                    <ProtectedRoute>
-                      <CommunityVoting />
-                    </ProtectedRoute>
-                  }
-                />
               </Routes>
               <ChatBot />
             </BrowserRouter>
