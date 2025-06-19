@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  frontend:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - appnet
+  backend:
+    build:
+      context: ./functions
+    command: npm run serve
+    environment:
+      - PORT=5001
+    ports:
+      - "5001:5001"
+    networks:
+      - appnet
+networks:
+  appnet:
+    driver: bridge
