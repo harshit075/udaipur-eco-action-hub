@@ -41,7 +41,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     try {
       await loader.load();
       
-      if (mapRef.current && window.google) {
+      if (mapRef.current && window.google?.maps) {
         const map = new window.google.maps.Map(mapRef.current, {
           center,
           zoom,
@@ -59,18 +59,11 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
           ]
         });
 
+        // Create marker with proper typing
         new window.google.maps.Marker({
           position: center,
           map: map,
-          title: 'Event Location',
-          icon: {
-            path: window.google.maps.SymbolPath.CIRCLE,
-            scale: 8,
-            fillColor: '#10b981',
-            fillOpacity: 1,
-            strokeColor: '#ffffff',
-            strokeWeight: 2
-          }
+          title: 'Event Location'
         });
 
         setMapLoaded(true);

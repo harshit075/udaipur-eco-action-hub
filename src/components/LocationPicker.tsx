@@ -1,7 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
 
 interface LocationPickerProps {
@@ -19,14 +18,14 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   const [selectedLocation, setSelectedLocation] = useState<string>('');
 
   useEffect(() => {
-    if (!window.google || !inputRef.current) return;
+    if (!window.google?.maps?.places || !inputRef.current) return;
 
     const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
       types: ['geocode'],
       componentRestrictions: { country: 'IN' } // Restrict to India
     });
 
-    autocomplete.addListener('place_changed', () => {
+    const handlePlaceChanged = () => {
       const place = autocomplete.getPlace();
       
       if (place.geometry && place.geometry.location) {
@@ -39,10 +38,14 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
         setSelectedLocation(location.address);
         onLocationSelect?.(location);
       }
-    });
+    };
+
+    autocomplete.addListener('place_changed', handlePlaceChanged);
 
     return () => {
-      window.google.maps.event.clearListeners(autocomplete, 'place_changed');
+      if (window.google?.maps?.event) {
+        window.google.maps.event.clearListeners(autocomplete, 'place_changed');
+      }
     };
   }, [onLocationSelect]);
 
