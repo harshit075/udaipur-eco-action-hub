@@ -5,44 +5,6 @@
 
 @layer base {
   :root {
-    --background: 248 253 251;
-    --foreground: 31 41 55;
-
-    --card: 255 255 255;
-    --card-foreground: 31 41 55;
-
-    --popover: 255 255 255;
-    --popover-foreground: 31 41 55;
-
-    --primary: 34 197 94;
-    --primary-foreground: 255 255 255;
-
-    --secondary: 243 244 246;
-    --secondary-foreground: 75 85 99;
-
-    --muted: 243 244 246;
-    --muted-foreground: 107 114 128;
-
-    --accent: 16 185 129;
-    --accent-foreground: 255 255 255;
-
-    --destructive: 239 68 68;
-    --destructive-foreground: 255 255 255;
-
-    --border: 229 231 235;
-    --input: 229 231 235;
-    --ring: 34 197 94;
-
-    --radius: 0.75rem;
-
-    --nature-green: 34 197 94;
-    --nature-blue: 59 130 246;
-    --nature-teal: 20 184 166;
-    --nature-emerald: 16 185 129;
-    --nature-purple: 139 92 246;
-  }
-
-  .dark {
     --background: 3 7 18;
     --foreground: 248 250 252;
 
@@ -70,6 +32,14 @@
     --border: 30 41 59;
     --input: 30 41 59;
     --ring: 34 197 94;
+
+    --radius: 0.75rem;
+
+    --nature-green: 34 197 94;
+    --nature-blue: 59 130 246;
+    --nature-teal: 20 184 166;
+    --nature-emerald: 16 185 129;
+    --nature-purple: 139 92 246;
   }
 }
 
@@ -81,7 +51,6 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -114,13 +83,8 @@
   }
 
   .glass-effect {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .dark .glass-effect {
     background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
