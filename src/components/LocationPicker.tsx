@@ -18,9 +18,13 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   const [selectedLocation, setSelectedLocation] = useState<string>('');
 
   useEffect(() => {
-    if (!window.google?.maps?.places || !inputRef.current) return;
+    if (!window.google?.maps || !inputRef.current) return;
 
-    const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
+    // Type assertion to access places API
+    const google = window.google as any;
+    if (!google.maps.places) return;
+
+    const autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
       types: ['geocode'],
       componentRestrictions: { country: 'IN' } // Restrict to India
     });
@@ -43,8 +47,9 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     autocomplete.addListener('place_changed', handlePlaceChanged);
 
     return () => {
-      if (window.google?.maps?.event) {
-        window.google.maps.event.clearListeners(autocomplete, 'place_changed');
+      // Use type assertion for event clearing
+      if (google.maps.event) {
+        google.maps.event.clearListeners(autocomplete, 'place_changed');
       }
     };
   }, [onLocationSelect]);
