@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -10,7 +11,6 @@ export default {
 	],
 	prefix: "",
 	theme: { 
-
 		container: {
 			center: true,
 			padding: '2rem',
@@ -62,6 +62,33 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Override yellow/amber with green variants
+				yellow: {
+					50: 'rgb(240 253 244)',
+					100: 'rgb(220 252 231)', 
+					200: 'rgb(187 247 208)',
+					300: 'rgb(134 239 172)',
+					400: 'rgb(74 222 128)',
+					500: 'rgb(34 197 94)',
+					600: 'rgb(22 163 74)',
+					700: 'rgb(21 128 61)',
+					800: 'rgb(22 101 52)',
+					900: 'rgb(20 83 45)',
+					950: 'rgb(5 46 22)'
+				},
+				amber: {
+					50: 'rgb(240 253 244)',
+					100: 'rgb(220 252 231)', 
+					200: 'rgb(187 247 208)',
+					300: 'rgb(134 239 172)',
+					400: 'rgb(74 222 128)',
+					500: 'rgb(34 197 94)',
+					600: 'rgb(22 163 74)',
+					700: 'rgb(21 128 61)',
+					800: 'rgb(22 101 52)',
+					900: 'rgb(20 83 45)',
+					950: 'rgb(5 46 22)'
 				}
 			},
 			borderRadius: {
