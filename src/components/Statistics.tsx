@@ -11,9 +11,10 @@ interface StatisticCardProps {
   description?: string;
   trend?: string;
   delay?: number;
+  valueColor?: string;
 }
 
-const StatisticCard = ({ title, value, icon: Icon, color, description, trend, delay = 0 }: StatisticCardProps) => (
+const StatisticCard = ({ title, value, icon: Icon, color, description, trend, delay = 0, valueColor = 'text-green-600' }: StatisticCardProps) => (
   <Card className="card-hover bg-gradient-to-br from-white to-gray-50/50 border-0 shadow-lg fade-in" style={{ animationDelay: `${delay}ms` }}>
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
       <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
@@ -22,7 +23,7 @@ const StatisticCard = ({ title, value, icon: Icon, color, description, trend, de
       </div>
     </CardHeader>
     <CardContent className="space-y-3">
-      <div className="text-3xl font-bold text-foreground tracking-tight">{value}</div>
+      <div className={`text-3xl font-bold ${valueColor} tracking-tight`}>{value}</div>
       {description && (
         <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
       )}
@@ -45,7 +46,8 @@ const Statistics = () => {
       color: 'from-green-500 to-emerald-600',
       description: 'Across 12 wards in Udaipur',
       trend: '+12% this month',
-      delay: 0
+      delay: 0,
+      valueColor: 'text-green-600'
     },
     {
       title: 'Kilometers Cycled',
@@ -54,7 +56,8 @@ const Statistics = () => {
       color: 'from-blue-500 to-cyan-600',
       description: 'By 450+ participants',
       trend: '+8% this week',
-      delay: 100
+      delay: 100,
+      valueColor: 'text-blue-600'
     },
     {
       title: 'Lakes Cleaned',
@@ -63,7 +66,8 @@ const Statistics = () => {
       color: 'from-emerald-500 to-teal-600',
       description: 'Including Fatehsagar & Pichola',
       trend: '+2 new locations',
-      delay: 200
+      delay: 200,
+      valueColor: 'text-emerald-600'
     },
     {
       title: 'E-Waste Collected',
@@ -72,7 +76,8 @@ const Statistics = () => {
       color: 'from-green-600 to-emerald-700',
       description: 'From 280+ households',
       trend: '+15% this month',
-      delay: 300
+      delay: 300,
+      valueColor: 'text-green-600'
     },
     {
       title: 'Active Volunteers',
@@ -81,7 +86,8 @@ const Statistics = () => {
       color: 'from-purple-500 to-violet-600',
       description: 'Regular participants',
       trend: '+45 new members',
-      delay: 400
+      delay: 400,
+      valueColor: 'text-purple-600'
     },
     {
       title: 'Events Completed',
@@ -90,7 +96,8 @@ const Statistics = () => {
       color: 'from-indigo-500 to-blue-600',
       description: 'Since January 2024',
       trend: '100% success rate',
-      delay: 500
+      delay: 500,
+      valueColor: 'text-indigo-600'
     }
   ];
 

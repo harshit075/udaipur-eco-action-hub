@@ -63,16 +63,16 @@ const PublicDashboard = () => {
   ];
 
   const impactMetrics = [
-    { title: 'CO2 Absorbed', value: '1,250', unit: 'tons', icon: TrendingUp, color: 'text-green-600' },
-    { title: 'Water Saved', value: '50,000', unit: 'liters', icon: BarChart3, color: 'text-blue-600' },
-    { title: 'Waste Recycled', value: '2,500', unit: 'kg', icon: Target, color: 'text-emerald-600' },
-    { title: 'Lives Impacted', value: '15,000', unit: 'people', icon: Users, color: 'text-purple-600' }
+    { title: 'CO2 Absorbed', value: '1,250', unit: 'tons', icon: TrendingUp, color: 'text-green-600', bgColor: 'from-green-100 to-green-200', textColor: 'text-green-600' },
+    { title: 'Water Saved', value: '50,000', unit: 'liters', icon: BarChart3, color: 'text-blue-600', bgColor: 'from-blue-100 to-blue-200', textColor: 'text-blue-600' },
+    { title: 'Waste Recycled', value: '2,500', unit: 'kg', icon: Target, color: 'text-emerald-600', bgColor: 'from-emerald-100 to-emerald-200', textColor: 'text-emerald-600' },
+    { title: 'Lives Impacted', value: '15,000', unit: 'people', icon: Users, color: 'text-purple-600', bgColor: 'from-purple-100 to-purple-200', textColor: 'text-purple-600' }
   ];
 
   const getRankIcon = (rank: number) => {
-    if (rank === 1) return <Trophy className="w-4 h-4 text-yellow-500" />;
+    if (rank === 1) return <Trophy className="w-4 h-4 text-green-500" />;
     if (rank === 2) return <Award className="w-4 h-4 text-gray-400" />;
-    if (rank === 3) return <Award className="w-4 h-4 text-amber-600" />;
+    if (rank === 3) return <Award className="w-4 h-4 text-green-600" />;
     return null;
   };
 
@@ -97,11 +97,11 @@ const PublicDashboard = () => {
                 <div>
                   <p className="text-sm font-medium text-muted-foreground mb-1">{metric.title}</p>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-foreground">{metric.value}</span>
+                    <span className={`text-3xl font-bold ${metric.textColor}`}>{metric.value}</span>
                     <span className="text-sm text-muted-foreground">{metric.unit}</span>
                   </div>
                 </div>
-                <div className={`w-12 h-12 rounded-full bg-gradient-to-br from-${metric.color.split('-')[1]}-100 to-${metric.color.split('-')[1]}-200 flex items-center justify-center`}>
+                <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${metric.bgColor} flex items-center justify-center`}>
                   <metric.icon className={`w-6 h-6 ${metric.color}`} />
                 </div>
               </div>
