@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +9,6 @@ import JoinEventForm from "@/components/JoinEventForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageToggle from "@/components/LanguageToggle";
 import { useState } from "react";
-import GoogleMap from "@/components/GoogleMap";
 
 const Events = () => {
   const { t } = useLanguage();
@@ -84,26 +84,6 @@ const Events = () => {
           <p className="text-2xl text-green-100 max-w-3xl mx-auto leading-relaxed">
             {t('upcomingEventsDesc')}
           </p>
-        </div>
-      </section>
-
-      {/* Events Location Map */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
-            Event Locations
-          </h2>
-          <p className="text-xl text-muted-foreground">
-            Find events happening near you in Udaipur
-          </p>
-        </div>
-        
-        <div className="max-w-4xl mx-auto">
-          <GoogleMap 
-            center={{ lat: 24.5854, lng: 73.7125 }}
-            zoom={12}
-            className="w-full h-96 rounded-lg shadow-lg"
-          />
         </div>
       </section>
 

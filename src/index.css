@@ -109,4 +109,34 @@
     from { opacity: 0; transform: translateY(40px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  /* Override any yellow text colors with green */
+  .text-yellow-400,
+  .text-yellow-500,
+  .text-yellow-600,
+  .text-amber-400,
+  .text-amber-500,
+  .text-amber-600 {
+    color: rgb(34 197 94) !important;
+  }
+
+  /* Override yellow backgrounds with green */
+  .bg-yellow-400,
+  .bg-yellow-500,
+  .bg-yellow-600,
+  .bg-amber-400,
+  .bg-amber-500,
+  .bg-amber-600 {
+    background-color: rgb(34 197 94) !important;
+  }
+
+  /* Override yellow borders with green */
+  .border-yellow-400,
+  .border-yellow-500,
+  .border-yellow-600,
+  .border-amber-400,
+  .border-amber-500,
+  .border-amber-600 {
+    border-color: rgb(34 197 94) !important;
+  }
 }
