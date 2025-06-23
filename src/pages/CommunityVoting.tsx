@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -83,7 +82,7 @@ const CommunityVoting = () => {
       budget: "₹18,00,000",
       location: "Public Markets",
       deadline: "2025-03-01",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop",
       status: "active"
     },
     {
