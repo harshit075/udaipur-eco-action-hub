@@ -1,9 +1,8 @@
-
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, Bot } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -23,6 +22,16 @@ const ChatBot = () => {
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const commonQuestions = [
     { 
@@ -97,7 +106,7 @@ const ChatBot = () => {
     return "🤔 I'd love to help you with that! I specialize in environmental initiatives in Udaipur. Here's what I can assist you with:\n\n🌳 **Tree Plantation:** Seed donations, plantation drives, forest conservation\n🍽️ **Food Programs:** Meal donations, feeding drives, community kitchens\n♻️ **Waste Management:** E-waste recycling, cleanup drives, plastic reduction\n🏊 **Lake Conservation:** Water body cleanup, pollution prevention\n🚴 **Sustainable Transport:** Cycling programs, eco-friendly commuting\n🗳️ **Community Projects:** Local development voting, infrastructure improvements\n📊 **Impact Tracking:** Personal dashboard, statistics, progress monitoring\n\nCould you tell me more specifically what you'd like to know about? I'm here to help make your environmental journey in Udaipur meaningful and impactful!";
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
     const userMessage: Message = {
@@ -107,98 +116,121 @@ const ChatBot = () => {
       timestamp: new Date()
     };
 
-    const botResponse: Message = {
-      id: (Date.now() + 1).toString(),
-      text: getBotResponse(inputMessage),
-      sender: 'bot',
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, userMessage, botResponse]);
+    setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
+    setIsTyping(true);
+
+    // Simulate typing delay for better UX
+    setTimeout(() => {
+      const botResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        text: getBotResponse(userMessage.text),
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, botResponse]);
+      setIsTyping(false);
+    }, 1000);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       handleSendMessage();
     }
   };
 
   return (
     <>
-      {/* Chat Button */}
+      {/* Dynamic Chat Button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-gradient-to-br from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 z-50 border-2 border-green-500/30"
+        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white shadow-2xl hover:shadow-3xl transition-all duration-500 z-50 border-2 border-green-500/30 transform hover:scale-110 ${isOpen ? 'rotate-180' : 'hover:rotate-12'}`}
       >
         {isOpen ? (
-          <X className="w-7 h-7" />
+          <X className="w-6 h-6 sm:w-7 sm:h-7 transition-transform duration-300" />
         ) : (
           <div className="relative">
-            <MessageCircle className="w-7 h-7" />
-            <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-yellow-300 animate-pulse" />
+            <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 transition-transform duration-300" />
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 absolute -top-1 -right-1 text-yellow-300 animate-ping" />
           </div>
         )}
       </Button>
 
-      {/* Chat Window */}
+      {/* Dynamic Chat Window */}
       {isOpen && (
-        <Card className="fixed bottom-28 right-6 w-96 h-[500px] shadow-2xl z-50 border-0 bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800 backdrop-blur-sm">
-          <CardHeader className="bg-gradient-to-r from-green-600 to-emerald-700 text-white rounded-t-lg border-b border-green-500/30">
-            <CardTitle className="text-xl flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <MessageCircle className="w-5 h-5" />
+        <Card className={`fixed bottom-20 right-4 sm:bottom-28 sm:right-6 w-[90vw] max-w-sm sm:w-96 h-[70vh] sm:h-[500px] shadow-2xl z-50 border-0 bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800 backdrop-blur-lg transform transition-all duration-500 animate-in slide-in-from-bottom-4 slide-in-from-right-4`}>
+          <CardHeader className="bg-gradient-to-r from-green-600 to-emerald-700 text-white rounded-t-lg border-b border-green-500/30 p-3 sm:p-4">
+            <CardTitle className="text-lg sm:text-xl flex items-center gap-2 sm:gap-3">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/20 flex items-center justify-center animate-pulse">
+                <Bot className="w-3 h-3 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <div className="font-bold">EcoBot Assistant</div>
+              <div className="flex-1">
+                <div className="font-bold text-sm sm:text-base">EcoBot Assistant</div>
                 <div className="text-xs text-green-100 font-normal">Your Environmental Guide</div>
               </div>
-              <div className="ml-auto w-3 h-3 rounded-full bg-green-300 animate-pulse"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-300 animate-pulse"></div>
             </CardTitle>
           </CardHeader>
           
-          <CardContent className="p-0 flex flex-col h-[420px] bg-gray-900/95">
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
-              {messages.map((message) => (
+          <CardContent className="p-0 flex flex-col h-[calc(70vh-80px)] sm:h-[420px] bg-gray-900/95 backdrop-blur-sm">
+            {/* Dynamic Messages Container */}
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+              {messages.map((message, index) => (
                 <div
                   key={message.id}
-                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-in slide-in-from-bottom-2`}
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div
-                    className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm whitespace-pre-line ${
+                    className={`max-w-[85%] px-3 sm:px-4 py-2 sm:py-3 rounded-2xl text-xs sm:text-sm whitespace-pre-line transition-all duration-300 hover:shadow-lg ${
                       message.sender === 'user'
-                        ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg'
-                        : 'bg-gradient-to-r from-gray-700 to-slate-700 text-gray-100 border border-gray-600/50 shadow-lg'
+                        ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg transform hover:scale-105'
+                        : 'bg-gradient-to-r from-gray-700 to-slate-700 text-gray-100 border border-gray-600/50 shadow-lg transform hover:scale-105'
                     }`}
                   >
                     {message.text}
                   </div>
                 </div>
               ))}
+              
+              {/* Typing Indicator */}
+              {isTyping && (
+                <div className="flex justify-start animate-in slide-in-from-bottom-2">
+                  <div className="bg-gradient-to-r from-gray-700 to-slate-700 text-gray-100 border border-gray-600/50 shadow-lg px-4 py-3 rounded-2xl">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
             </div>
 
-            {/* Input */}
-            <div className="p-4 border-t border-gray-700/50 bg-gray-800/50 backdrop-blur-sm">
-              <div className="flex gap-3">
+            {/* Dynamic Input Section */}
+            <div className="p-3 sm:p-4 border-t border-gray-700/50 bg-gray-800/50 backdrop-blur-sm">
+              <div className="flex gap-2 sm:gap-3">
                 <Input
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask about environmental initiatives..."
-                  className="flex-1 bg-gray-700/50 border-gray-600 text-gray-100 placeholder:text-gray-400 focus:border-green-500 focus:ring-green-500/20 rounded-xl"
+                  className="flex-1 bg-gray-700/50 border-gray-600 text-gray-100 placeholder:text-gray-400 focus:border-green-500 focus:ring-green-500/20 rounded-xl text-sm transition-all duration-300 hover:bg-gray-700/70"
+                  disabled={isTyping}
                 />
                 <Button 
                   onClick={handleSendMessage} 
                   size="sm" 
-                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 rounded-xl shadow-lg"
-                  disabled={!inputMessage.trim()}
+                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-3 sm:px-4 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl transform hover:scale-105"
+                  disabled={!inputMessage.trim() || isTyping}
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </div>
-              <div className="text-xs text-gray-400 mt-2 text-center">
-                Powered by EcoBot • Making Udaipur Greener
+              <div className="text-xs text-gray-400 mt-2 text-center animate-pulse">
+                Powered by EcoBot • Making Udaipur Greener 🌱
               </div>
             </div>
           </CardContent>

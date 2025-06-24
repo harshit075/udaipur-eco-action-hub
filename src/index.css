@@ -52,6 +52,10 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @layer utilities {
@@ -89,7 +93,7 @@
   }
 
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2;
+    @apply transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 hover:scale-105;
   }
 
   .fade-in {
@@ -108,6 +112,65 @@
   @keyframes slideUp {
     from { opacity: 0; transform: translateY(40px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  .pulse-glow {
+    animation: pulseGlow 2s infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { 
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+    }
+    50% { 
+      box-shadow: 0 0 40px rgba(34, 197, 94, 0.8);
+    }
+  }
+
+  .floating {
+    animation: floating 3s ease-in-out infinite;
+  }
+
+  @keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .dynamic-bg {
+    background: linear-gradient(-45deg, #0f172a, #1e293b, #0f172a, #334155);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Dynamic scrollbar styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(75, 85, 99, 0.5) rgba(31, 41, 55, 0.3);
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: rgba(31, 41, 55, 0.3);
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(75, 85, 99, 0.5);
+    border-radius: 3px;
+    transition: background 0.3s ease;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 197, 94, 0.7);
   }
 
   /* Override any yellow text colors with green */
@@ -138,5 +201,87 @@
   .border-amber-500,
   .border-amber-600 {
     border-color: rgb(34 197 94) !important;
+  }
+
+  /* Responsive utilities for better mobile experience */
+  @media (max-width: 640px) {
+    .mobile-safe-area {
+      padding-bottom: env(safe-area-inset-bottom, 20px);
+    }
+  }
+
+  /* Enhanced button animations */
+  .btn-dynamic {
+    @apply transition-all duration-300 transform hover:scale-105 hover:shadow-lg active:scale-95;
+  }
+
+  /* Card animations */
+  .card-dynamic {
+    @apply transition-all duration-500 hover:shadow-2xl;
+  }
+
+  .card-dynamic:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  /* Text animations */
+  .text-reveal {
+    opacity: 0;
+    animation: textReveal 0.8s ease-out forwards;
+  }
+
+  @keyframes textReveal {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Dynamic form styling */
+  .form-dynamic input:focus,
+  .form-dynamic textarea:focus,
+  .form-dynamic select:focus {
+    @apply ring-2 ring-green-500/50 border-green-500 transform scale-105 transition-all duration-300;
+  }
+
+  /* Loading states */
+  .loading-dots {
+    display: inline-block;
+  }
+
+  .loading-dots::after {
+    content: '';
+    animation: loadingDots 1.5s infinite;
+  }
+
+  @keyframes loadingDots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+  }
+
+  /* Enhanced navigation */
+  .nav-item {
+    @apply relative transition-all duration-300;
+  }
+
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgb(34 197 94), rgb(16 185 129));
+    transition: width 0.3s ease;
+  }
+
+  .nav-item:hover::after,
+  .nav-item.active::after {
+    width: 100%;
   }
 }

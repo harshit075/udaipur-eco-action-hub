@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,7 +17,14 @@ import CommunityVoting from "./pages/CommunityVoting";
 import NotFound from "./pages/NotFound";
 import JoinPage from "./pages/JoinPage";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      retry: 1,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -24,21 +32,23 @@ const App = () => (
       <ThemeProvider defaultTheme="dark" storageKey="eco-udaipur-theme">
         <AuthProvider>
           <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                {/* --- PUBLIC ROUTES --- */}
-                <Route path="/" element={<Index />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/join" element={<JoinPage />} />
-                <Route path="/events" element={<Events />} />
-                <Route path="/donate" element={<Donate />} />
-                <Route path="/community-voting" element={<CommunityVoting />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <ChatBot />
-            </BrowserRouter>
+            <div className="min-h-screen dynamic-bg">
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  {/* --- PUBLIC ROUTES --- */}
+                  <Route path="/" element={<Index />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/join" element={<JoinPage />} />
+                  <Route path="/events" element={<Events />} />
+                  <Route path="/donate" element={<Donate />} />
+                  <Route path="/community-voting" element={<CommunityVoting />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+                <ChatBot />
+              </BrowserRouter>
+            </div>
           </TooltipProvider>
         </AuthProvider>
       </ThemeProvider>
