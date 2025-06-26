@@ -1,0 +1,73 @@
+# This is the name of the workflow that will appear in the GitHub Actions tab.
+name: Deploy to Production GCP
+
+# This section defines the trigger for the workflow.
+# It runs on every push to the 'main' branch.
+on:
+  push:
+    branches:
+      - main
+
+# A workflow is made up of one or more jobs.
+jobs:
+  # We have a single job called 'deploy'.
+  deploy:
+    # The 'name' is what shows up in the UI for this specific job.
+    name: Deploy Application
+    # 'runs-on' specifies the type of runner machine to use. 'ubuntu-latest' is standard.
+    runs-on: ubuntu-latest
+
+    # The 'steps' are the individual commands that are executed in order.
+    steps:
+      # Step 1: Checks out your repository code into the runner machine.
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Sets up Node.js for validation steps.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # Step 3: A quality gate. Installs dependencies and runs your linter.
+      # If 'npm run lint' fails, the entire workflow will stop here.
+      - name: Install Dependencies and Lint
+        run: |
+          npm install
+          npm run lint
+
+      # Step 4: This is the core deployment action.
+      # It uses a pre-made action from the marketplace to handle the SSH connection.
+      - name: Deploy to GCP VM
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          # The next 4 values are securely retrieved from GitHub Secrets.
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          # This is the multi-line script that will be executed on your VM.
+          script: |
+            echo "--- ✅ Successfully connected to server ---"
+            
+            # Navigate to the project folder on the VM.
+            cd ~/udaipur-eco-action-hub
+            
+            # Pull the latest code changes from your GitHub repository.
+            echo "--- 🔄 Pulling latest code from main branch ---"
+            git pull origin main
+            
+            # Rebuild the Docker image using the Dockerfile.
+            echo "--- 🛠️  Rebuilding Docker image: eco-earth-app ---"
+            docker build -t eco-earth-app .
+            
+            # Stop and remove the old container.
+            echo "--- 🛑 Stopping and removing old container ---"
+            (docker stop eco-earth-container && docker rm eco-earth-container) || echo "Container not found, creating a new one."
+            
+            # Launch a new container from the new image.
+            echo "--- 🚀 Launching new container ---"
+            docker run -d --name eco-earth-container --restart always -p 80:80 -p 443:443 -v /etc/letsencrypt:/etc/letsencrypt:ro eco-earth-app
+            
+            # Final success message.
+            echo "--- 🎉 Deployment to Production Complete ---"
