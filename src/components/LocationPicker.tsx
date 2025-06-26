@@ -21,7 +21,16 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     if (!window.google?.maps || !inputRef.current) return;
 
     // Type assertion to access places API
-    const google = window.google as any;
+    const google = window.google as typeof window.google & {
+      maps: {
+        places: {
+          Autocomplete: new (input: HTMLInputElement, options?: unknown) => {
+            addListener: (event: string, callback: () => void) => void;
+            getPlace: () => { geometry?: { location?: { lat: () => number; lng: () => number } } };
+          };
+        };
+      };
+    };
     if (!google.maps.places) return;
 
     const autocomplete = new google.maps.places.Autocomplete(inputRef.current, {

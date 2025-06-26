@@ -10,9 +10,24 @@ import LanguageToggle from "@/components/LanguageToggle";
 import VotingForm from "@/components/VotingForm";
 import { useState } from "react";
 
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  icon: React.ComponentType<{ className?: string; size?: number | string }>;
+  votes: number;
+  totalVotes: number;
+  budget: string;
+  location: string;
+  deadline: string;
+  image: string;
+  status: string;
+}
+
 const CommunityVoting = () => {
   const { t } = useLanguage();
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const projects = [
     {

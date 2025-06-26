@@ -10,9 +10,22 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageToggle from "@/components/LanguageToggle";
 import { useState } from "react";
 
+interface Event {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+  time: string;
+  location: string;
+  attendees: number;
+  image: string;
+  category: string;
+  status: string;
+}
+
 const Events = () => {
   const { t } = useLanguage();
-  const [selectedEvent, setSelectedEvent] = useState<any>(null);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   const events = [
     {

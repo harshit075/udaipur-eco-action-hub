@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   const [mapLoaded, setMapLoaded] = useState(false);
   const [error, setError] = useState<string>('');
 
-  const initMap = async (key: string) => {
+  const initMap = useCallback(async (key: string) => {
     if (!key) {
       setError('Please enter your Google Maps API key');
       return;
@@ -74,7 +74,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       console.error('Error loading Google Maps:', error);
       setError('Failed to load Google Maps. Please check your API key.');
     }
-  };
+  }, [center, zoom]);
 
   const handleApiKeySubmit = () => {
     initMap(userApiKey);
@@ -84,7 +84,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     if (userApiKey) {
       initMap(userApiKey);
     }
-  }, [center, zoom]);
+  }, [center, zoom, initMap, userApiKey]);
 
   if (!mapLoaded && !userApiKey) {
     return (

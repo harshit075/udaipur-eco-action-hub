@@ -6,7 +6,7 @@ import { TreePine, Bike, Users, Recycle, Award, TrendingUp } from 'lucide-react'
 interface StatisticCardProps {
   title: string;
   value: string | number;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ className?: string; size?: number | string }>;
   color: string;
   description?: string;
   trend?: string;

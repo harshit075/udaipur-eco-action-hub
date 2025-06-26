@@ -77,11 +77,12 @@ const JoinPage = () => {
       
       toast.success(`Welcome, ${data.name}!`, { description: "Your account has been created." });
       // We no longer need to navigate here; the useEffect will handle it.
-    } catch (error: any) {
-      const message = error.code === 'auth/email-already-in-use' 
+    } catch (error: unknown) {
+      const message = (error as { code?: string }).code === 'auth/email-already-in-use' 
         ? 'This email is already in use.' 
         : 'Failed to create account.';
-      toast.error(message, { description: error.message });
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      toast.error(message, { description: errorMessage });
       setIsLoading(false); // Only set loading to false on error
     } 
     // No finally block needed, as success is handled by useEffect navigation.
@@ -93,7 +94,7 @@ const JoinPage = () => {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       toast.success("Welcome back!", { description: "You are now logged in." });
       // We no longer need to navigate here; the useEffect will handle it.
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error("Login Failed", { description: "Please check your email and password." });
       setIsLoading(false); // Only set loading to false on error
     }

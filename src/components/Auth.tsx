@@ -18,8 +18,8 @@ const Auth: React.FC = () => {
         await createUserWithEmailAndPassword(auth, email, password);
         alert("Signed up!");
       }
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error: unknown) {
+      alert(error instanceof Error ? error.message : 'An error occurred');
     }
   };
 
