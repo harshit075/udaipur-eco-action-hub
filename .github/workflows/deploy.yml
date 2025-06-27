@@ -59,7 +59,7 @@ jobs:
             
          
             echo "---  Launching new container ---"
-            docker run -d --name eco-earth-container --restart always -p 80:80 -p 443:443 -v /etc/letsencrypt:/etc/letsencrypt:ro -v eco-earth-logs:/var/log/nginx eco-earth-app
+            docker run -d --name eco-earth-container --restart always -p 80:80 -p 443:443 -v /etc/letsencrypt:/etc/letsencrypt:ro eco-earth-app
             
             
             echo "---  Deployment to Production Complete ---"
