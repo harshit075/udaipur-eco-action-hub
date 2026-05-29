@@ -9,6 +9,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 import ChatBot from "@/components/ChatBot";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Events from "./pages/Events";
 import Donate from "./pages/Donate";
@@ -39,12 +40,14 @@ const App = () => (
                 <Routes>
                   {/* --- PUBLIC ROUTES --- */}
                   <Route path="/" element={<Index />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/join" element={<JoinPage />} />
-                  <Route path="/events" element={<Events />} />
-                  <Route path="/donate" element={<Donate />} />
-                  <Route path="/community-voting" element={<CommunityVoting />} />
                   <Route path="*" element={<NotFound />} />
+
+                  {/* --- PROTECTED ROUTES --- */}
+                  <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                  <Route path="/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
+                  <Route path="/donate" element={<ProtectedRoute><Donate /></ProtectedRoute>} />
+                  <Route path="/community-voting" element={<ProtectedRoute><CommunityVoting /></ProtectedRoute>} />
                 </Routes>
                 <ChatBot />
               </BrowserRouter>

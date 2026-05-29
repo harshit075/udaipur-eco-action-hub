@@ -1,49 +1,53 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { createContext, useContext, useState, ReactNode } from 'react';
+
+interface AuthUser {
+  id: number;
+  name: string;
+  email: string;
+}
 
 interface AuthContextType {
-  currentUser: User | null;
+  currentUser: AuthUser | null;
   loading: boolean;
+  login: (token: string, user: AuthUser) => void;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
   currentUser: null,
-  loading: true,
+  loading: false,
+  login: () => {},
+  logout: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
+const getStoredUser = (): AuthUser | null => {
+  try {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    if (token && user) return JSON.parse(user);
+  } catch {}
+  return null;
+};
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(getStoredUser);
 
-  useEffect(() => {
-    // onAuthStateChanged is the key. It fires once on load, and then again
-    // anytime the user signs in or out.
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setLoading(false); // <--- This is where the magic happens.
-    });
-
-    // Cleanup subscription on unmount
-    return unsubscribe;
-  }, []);
-
-  const value = {
-    currentUser,
-    loading, // Keep loading in the value so ProtectedRoute can use it
+  const login = (token: string, user: AuthUser) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    setCurrentUser(user);
   };
 
-  // The crucial line is this one below. We are now saying:
-  // "Do not render the rest of the app until loading is false."
-  // Previously we rendered immediately, which caused the race condition.
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setCurrentUser(null);
+  };
+
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ currentUser, loading: false, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

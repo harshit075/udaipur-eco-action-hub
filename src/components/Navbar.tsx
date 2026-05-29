@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import LanguageToggle from '@/components/LanguageToggle';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { auth } from '@/lib/firebase';
-import { signOut } from 'firebase/auth';
 import { toast } from 'sonner';
 import { Menu, X, TreePine, Users, Calendar, BarChart3, Vote, LogOut, UserPlus } from 'lucide-react';
 
@@ -15,7 +13,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const location = useLocation();
   const onJoinPage = location.pathname === '/join';
 
@@ -27,9 +25,9 @@ const Navbar = () => {
     { name: t('impact'), href: '/dashboard', icon: BarChart3 },
   ];
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     setIsOpen(false);
-    await signOut(auth);
+    logout();
     toast.success('You have been logged out.');
     navigate('/');
   };
@@ -90,8 +88,7 @@ const Navbar = () => {
                 // This is now a simple button that calls handleLogout directly
                 <Button variant="ghost" className="h-10 w-auto space-x-2 px-3" onClick={handleLogout}>
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={currentUser?.photoURL || ''} alt={currentUser?.displayName || 'User'} />
-                    <AvatarFallback>{getUserInitials(currentUser?.displayName)}</AvatarFallback>
+                    <AvatarFallback>{getUserInitials(currentUser?.name)}</AvatarFallback>
                   </Avatar>
                   <span className="text-sm font-semibold">Logout</span>
                   <LogOut className="h-4 w-4 text-muted-foreground" />
